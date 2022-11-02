@@ -1,4 +1,7 @@
-﻿<MudNavMenu>
+﻿@namespace PizzaApp.Components
+@inject ISnackbar Snackbar
+
+<MudNavMenu>
     <MudNavLink Href="/" Match="NavLinkMatch.All">Dashboard</MudNavLink>
     <MudNavLink Href="/servers" Match="NavLinkMatch.Prefix">Servers</MudNavLink>
     <MudNavGroup Title="Settings" Expanded="true">
@@ -7,3 +10,6 @@
     </MudNavGroup>
     <MudNavLink Href="/about" Match="NavLinkMatch.Prefix">About</MudNavLink>
 </MudNavMenu>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="@(() => Snackbar.Add("Simple Snackbar"))">
+    Open Snackbar
+</MudButton>

@@ -1,0 +1,33 @@
+﻿@inherits LayoutComponentBase
+@namespace PizzaApp
+
+<PageTitle>PizzaApp</PageTitle>
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudToggleIconButton @bind-Toggled="MenuOpened" Icon="@Icons.Material.Filled.Menu" ToggledIcon="@Icons.Material.Filled.Close" Color="Color.Inherit" ToggledColor="Color.Inherit" Edge="Edge.Start" />
+        <MudText Typo="Typo.h5" Class="ml-3">Pizza Place</MudText>
+        <MudSpacer />
+        <MudAvatar Color="Color.Secondary">K</MudAvatar>
+    </MudAppBar>
+    <MudDrawer @bind-Open="MenuOpened" ClipMode="DrawerClipMode.Always" Elevation="2">
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent Class="px-3 pb-3 mt-3">
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    bool MenuOpened = true;
+
+    void DrawerToggle()
+    {
+        MenuOpened = !MenuOpened;
+    }
+}
+

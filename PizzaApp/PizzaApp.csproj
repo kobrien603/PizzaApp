@@ -12,6 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Components\Skeletons\" />
+    <Folder Include="Shared\" />
+    <Folder Include="Pages\Order\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
