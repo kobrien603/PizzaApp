@@ -8,13 +8,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Order\**" />
+    <Compile Remove="Shared\**" />
+    <Content Remove="Pages\Order\**" />
+    <Content Remove="Shared\**" />
+    <EmbeddedResource Remove="Pages\Order\**" />
+    <EmbeddedResource Remove="Shared\**" />
+    <None Remove="Pages\Order\**" />
+    <None Remove="Shared\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Components\Skeletons\" />
-    <Folder Include="Shared\" />
-    <Folder Include="Pages\Order\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
