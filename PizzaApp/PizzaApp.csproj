@@ -38,4 +38,8 @@
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PizzaApp.Server\PizzaApp.Server.csproj" />
+  </ItemGroup>
+
 </Project>
