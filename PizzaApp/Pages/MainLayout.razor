@@ -18,7 +18,7 @@
         <NavMenu />
     </MudDrawer>
     <MudMainContent>
-        <div class="main_container">
+        <div class="main_container pb-3">
             <div class="content">
                 @Body
             </div>
@@ -28,7 +28,7 @@
 </MudLayout>
 
 @code {
-    bool MenuOpened = true;
+    bool MenuOpened = false;
 
     void DrawerToggle()
     {
