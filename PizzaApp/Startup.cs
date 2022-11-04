@@ -1,11 +1,15 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using MudBlazor;
 using MudBlazor.Services;
+using PizzaApp.Server.DAL;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace PizzaApp
 { 
@@ -17,7 +21,14 @@ namespace PizzaApp
         /// </summary>
         public static void TryAddPizzaAppRCL(this IServiceCollection services)
         {
+            // add database
+            services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddDbContextFactory<PizzaContext>(options =>
+                options.UseMySQL()
+            );
+
             // add mudblazor
+            services.AddMudBlazorSnackbar();
             services.AddMudServices(config =>
             {
                 config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;
@@ -30,7 +41,6 @@ namespace PizzaApp
                 config.SnackbarConfiguration.ShowTransitionDuration = 500;
                 config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
             });
-            services.AddMudBlazorSnackbar();
         }
     }
 }
