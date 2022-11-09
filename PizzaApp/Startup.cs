@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace PizzaApp
 { 
@@ -21,12 +20,6 @@ namespace PizzaApp
         /// </summary>
         public static void TryAddPizzaAppRCL(this IServiceCollection services)
         {
-            // add database
-            services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDbContextFactory<PizzaContext>(options =>
-                options.UseMySQL()
-            );
-
             // add mudblazor
             services.AddMudBlazorSnackbar();
             services.AddMudServices(config =>

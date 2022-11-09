@@ -18,7 +18,7 @@ namespace PizzaApp.Server.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<User>().ToTable("users");
         }
     }
 }
