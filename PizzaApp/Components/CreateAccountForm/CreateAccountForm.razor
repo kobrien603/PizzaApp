@@ -3,33 +3,47 @@
 
 <MudGrid>
     <MudItem xs="12">
-            <MudForm @ref="MudForm" @bind-IsValid="@FormValid">
-                <MudTextField T="string" Label="Username" Required="true" RequiredError="User name is required!" />
-                <MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!"
-                              Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
-                <MudTextField T="string" Label="Password" HelperText="Choose a strong password" @ref="Password"
-                              InputType="InputType.Password"
-                              Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
-                              RequiredError="Password is required!" />
-                <MudTextField T="string"
-                              Label="Password" HelperText="Repeat the password" InputType="InputType.Password"
-                              Validation="@(new Func<string, string>(PasswordMatch))" />
-                <div class="d-flex">
-                    <MudRadioGroup T="string" Required="true" RequiredError="Account type is required!">
-                        <MudRadio Option="@("Personal")">Personal</MudRadio>
-                        <MudRadio Option="@("Professional")">Professional</MudRadio>
-                    </MudRadioGroup>
-                </div>
-                <div class="d-flex align-center justify-space-between">
-                    <MudCheckBox T="bool" Required="true" RequiredError="You must agree" Label="I agree!" />
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!FormValid)" Class="ml-auto">Register</MudButton>
-                </div>
-            </MudForm>
+        <MudForm @ref="MudForm" @bind-IsValid="@FormValid">
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudTextField T="string" Label="First Name" Required="true" RequiredError="First Name is required!" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField T="string" Label="Last Name" Required="true" RequiredError="Last Name is required!" />
+                </MudItem>
+            </MudGrid>
 
-        <MudPaper Class="pa-4 mt-4">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(()=>MudForm.Validate())">Validate</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Secondary" DisableElevation="true" OnClick="@(()=>MudForm.Reset())" Class="mx-2">Reset</MudButton>
-            <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="@(()=>MudForm.ResetValidation())">Reset Validation</MudButton>
-        </MudPaper>
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudTextField T="string" 
+                        Label="Email" 
+                        Required="true" 
+                        RequiredError="Email is required!" 
+                        Validation="@(new EmailAddressAttribute() { ErrorMessage = "The email address is invalid" })" 
+                    />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudDatePicker Label="Date of Birth" Required="true" RequiredError="Date of Birth is required!" />
+                </MudItem>
+            </MudGrid>
+
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudTextField T="string" @ref="Password"
+                        Label="Password"
+                        InputType="InputType.Password"
+                        Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
+                        RequiredError="Password is required!" 
+                    />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField T="string"
+                        Label="Confirm Password"
+                        InputType="InputType.Password"
+                        Validation="@(new Func<string, string>(PasswordMatch))" 
+                    />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
     </MudItem>
 </MudGrid>

@@ -14,7 +14,6 @@ namespace PizzaApp.Components
         MudTextField<string>? Password;
         bool FormValid { get; set; }
 
-
         private IEnumerable<string> PasswordStrength(string pw)
         {
             if (string.IsNullOrWhiteSpace(pw))
@@ -34,7 +33,10 @@ namespace PizzaApp.Components
 
         private string? PasswordMatch(string tmpPassword)
         {
-            if (Password.Value != tmpPassword)
+            if (string.IsNullOrWhiteSpace(tmpPassword))
+                return "Password is required!";
+
+            if (Password?.Value != tmpPassword)
                 return "Passwords don't match";
             return null;
         }
