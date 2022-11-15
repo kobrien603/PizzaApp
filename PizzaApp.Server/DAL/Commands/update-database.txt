@@ -1,0 +1,1 @@
+﻿ dotnet ef database update --project PizzaApp.Server --startup-project PizzaApp.Web --verbose

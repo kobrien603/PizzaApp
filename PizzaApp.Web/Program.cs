@@ -18,26 +18,27 @@ builder.Services.TryAddPizzaAppRCL();
 
 // add database
 var connectionString = builder.Configuration.GetConnectionString("PizzaConnection");
-//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-//builder.Services.AddDbContextFactory<PizzaContext>(options => {
-//    options.UseMySql(
-//        connectionString,
-//        ServerVersion.AutoDetect(connectionString)
-//        //x => x.MigrationsAssembly("PizzaApp.Server")
-//    );
-//});
-
-builder.Services.AddDbContext<PizzaContext>(options => {
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddDbContextFactory<PizzaContext>(options =>
+{
     options.UseMySql(
         connectionString,
-        ServerVersion.AutoDetect(connectionString)
-        //x => x.MigrationsAssembly("PizzaApp.Server")
+        ServerVersion.AutoDetect(connectionString),
+        x => x.MigrationsAssembly("PizzaApp.Server")
     );
 });
 
+builder.Services.AddDbContext<PizzaContext>(options =>
+{
+    options.UseMySql(
+        connectionString,
+        ServerVersion.AutoDetect(connectionString),
+        x => x.MigrationsAssembly("PizzaApp.Server")
+    );
+});
 
 builder.Services.AddEntityFrameworkMySql();
-new EntityFrameworkRelationalDesignServicesBuilder(builder.Services).TryAddCoreServices();
+//new EntityFrameworkRelationalDesignServicesBuilder(builder.Services).TryAddCoreServices();
 
 var app = builder.Build();
 
