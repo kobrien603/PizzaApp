@@ -10,10 +10,9 @@ namespace PizzaApp.Components
 {
     partial class CreateAccountForm
     {
-        MudForm MudForm;
-        MudTextField<string> Password;
+        MudForm? MudForm;
+        MudTextField<string>? Password;
         bool FormValid { get; set; }
-
 
         private IEnumerable<string> PasswordStrength(string pw)
         {
@@ -32,9 +31,12 @@ namespace PizzaApp.Components
                 yield return "Password must contain at least one digit";
         }
 
-        private string PasswordMatch(string tmpPassword)
+        private string? PasswordMatch(string tmpPassword)
         {
-            if (Password.Value != tmpPassword)
+            if (string.IsNullOrWhiteSpace(tmpPassword))
+                return "Password is required!";
+
+            if (Password?.Value != tmpPassword)
                 return "Passwords don't match";
             return null;
         }
