@@ -3,13 +3,22 @@
 
 <MudGrid>
     <MudItem xs="12">
-        <MudForm @ref="MudForm" @bind-IsValid="@FormValid">
+        <EditForm @ref="MudForm" OnValidSubmit="CreateAccount" Model="User">
+            <DataAnnotationsValidator/>
             <MudGrid>
                 <MudItem xs="12" sm="6">
-                    <MudTextField T="string" Label="First Name" Required="true" RequiredError="First Name is required!" />
+                    <MudTextField T="string" 
+                        Label="First Name" 
+                        @bind-Value="User.FirstName"
+                        For="@(() => User.FirstName)"
+                    />
                 </MudItem>
                 <MudItem xs="12" sm="6">
-                    <MudTextField T="string" Label="Last Name" Required="true" RequiredError="Last Name is required!" />
+                    <MudTextField T="string" 
+                        Label="Last Name" 
+                        @bind-Value="User.LastName"
+                        For="@(() => User.LastName)"
+                    />
                 </MudItem>
             </MudGrid>
 
@@ -17,22 +26,28 @@
                 <MudItem xs="12" sm="6">
                     <MudTextField T="string" 
                         Label="Email" 
-                        Required="true" 
-                        RequiredError="Email is required!" 
-                        Validation="@(new EmailAddressAttribute() { ErrorMessage = "The email address is invalid" })" 
+                        @bind-Value="User.Email"
+                        For="@(() => User.Email)"
                     />
                 </MudItem>
                 <MudItem xs="12" sm="6">
-                    <MudDatePicker Label="Date of Birth" Required="true" RequiredError="Date of Birth is required!" />
+                    <MudDatePicker Label="Date of Birth" 
+                        @bind-Date="User.DateOfBirth"
+                        For="@(() => User.DateOfBirth)"
+                    />
                 </MudItem>
             </MudGrid>
 
             <MudGrid>
                 <MudItem xs="12" sm="6">
-                    <MudTextField T="string" @ref="Password"
+                    <MudTextField @ref="Password" 
+                        T="string"
                         Label="Password"
+                        @bind-Value="User.Password"
+                        For="@(() => User.Password)"
                         InputType="InputType.Password"
-                        Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
+                        Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" 
+                        Required="true"
                         RequiredError="Password is required!" 
                     />
                 </MudItem>
@@ -44,6 +59,18 @@
                     />
                 </MudItem>
             </MudGrid>
-        </MudForm>
+            
+            <MudButton Disabled="@BtnCreateAccount" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">
+                @if (BtnCreateAccount)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
+                    <MudText Class="ms-2">Processing</MudText>
+                }
+                else
+                {
+                    <MudText>Click me</MudText>
+                }
+            </MudButton>
+        </EditForm>
     </MudItem>
 </MudGrid>
