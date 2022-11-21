@@ -22,25 +22,25 @@
                     </MudItem>
                 </MudGrid>
                 <MudGrid>
-                    <MudItem xs="12" sm="6">
+                    <MudItem xs="12" sm="12" md="6">
                         <MudTextField Label="First Name" @bind-Value="User.FirstName" For="@(() => User.FirstName)" />
                     </MudItem>
-                    <MudItem xs="12" sm="6">
+                    <MudItem xs="12" sm="12" md="6">
                         <MudTextField Label="Last Name" @bind-Value="User.LastName" For="@(() => User.LastName)" />
                     </MudItem>
                 </MudGrid>
 
                 <MudGrid>
-                    <MudItem xs="12" sm="6">
+                    <MudItem xs="12" sm="12" md="6">
                         <MudTextField Label="Email" @bind-Value="User.Email" For="@(() => User.Email)" Immediate="true" />
                     </MudItem>
-                    <MudItem xs="12" sm="6">
-                        <MudDatePicker Label="Date of Birth" @bind-Date="User.DateOfBirth" For="@(() => User.DateOfBirth)" />
+                    <MudItem xs="12" sm="12" md="6">
+                        <MudDatePicker Label="Date of Birth" @bind-Date="User.DateOfBirth" For="@(() => User.DateOfBirth)" OpenTo="OpenTo.Year" Rounded="true" Elevation="12" />
                     </MudItem>
                 </MudGrid>
 
                 <MudGrid>
-                    <MudItem xs="12" sm="6">
+                    <MudItem xs="12" sm="12" md="6">
                         <MudTextField 
                             @bind-Value="User.Password"
                             For="@(() => User.Password)"
@@ -54,7 +54,7 @@
                             Immediate="true"
                         />
                     </MudItem>
-                    <MudItem xs="12" sm="6">
+                    <MudItem xs="12" sm="12" md="6">
                         <MudTextField @bind-Value="User.ConfirmPassword" 
                             For="@(() => User.ConfirmPassword)"
                             Label="Confirm Password" 

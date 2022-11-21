@@ -35,15 +35,6 @@ namespace PizzaApp.Components
             base.OnAfterRender(firstRender);
         }
 
-        private async Task CreateAccount()
-        {
-            BtnCreateAccount = true;
-
-            await Task.Delay(1000);
-
-            BtnCreateAccount = false;
-        }
-
         private void SetProfilePicture(string profilePic)
         {
             User.ProfilePicture = profilePic;
@@ -63,6 +54,15 @@ namespace PizzaApp.Components
                 PasswordInput = InputType.Text;
                 PasswordInputIcon = Icons.Material.Filled.Visibility;
             }
+        }
+
+        private async Task CreateAccount()
+        {
+            BtnCreateAccount = true;
+
+            await Task.Delay(1000);
+
+            BtnCreateAccount = false;
         }
     }
 }

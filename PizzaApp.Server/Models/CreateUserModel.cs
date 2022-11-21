@@ -54,6 +54,7 @@ namespace PizzaApp.Server.Models
 
         public string ProfilePicture { get; set; } = string.Empty;
 
+        [BirthdayValidation]
         public DateTime? DateOfBirth { get; set; }
 
         public string PhoneNumber { get; set; } = string.Empty;
@@ -70,6 +71,9 @@ namespace PizzaApp.Server.Models
 
         public bool PasswordsMatch { get; set; }
 
+        /// <summary>
+        /// Validation to check off bools for visual aid on meeting requirements
+        /// </summary>
         private void FillPasswordCheckList()
         {
             if (Password.Length >= 8 && Password.Length <= 30)
@@ -131,6 +135,9 @@ namespace PizzaApp.Server.Models
             }
         }
 
+        /// <summary>
+        /// Validation to check off bools for visual aid on meeting requirements
+        /// </summary>
         private void FillConfirmPasswordCheckList()
         {
             if (Password == ConfirmPassword)
