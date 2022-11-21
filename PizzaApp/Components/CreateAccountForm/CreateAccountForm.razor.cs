@@ -1,4 +1,6 @@
-﻿using MudBlazor;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using MudBlazor;
+using PizzaApp.Server.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +10,24 @@ using System.Threading.Tasks;
 
 namespace PizzaApp.Components
 {
-    partial class CreateAccountForm
+    public partial class CreateAccountForm
     {
-        MudForm? MudForm;
-        MudTextField<string>? Password;
-        bool FormValid { get; set; }
+        User User { get; set; } = new();
+        EditForm? MudForm { get; set; }
+        bool BtnCreateAccount { get; set; }
+        MudTextField<string>? Password { get; set; }
+        bool IsLoading { get; set; } = true;
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (firstRender)
+            {
+                IsLoading = false;
+                StateHasChanged();
+            }
+
+            base.OnAfterRender(firstRender);
+        }
 
         private IEnumerable<string> PasswordStrength(string pw)
         {
@@ -39,6 +54,21 @@ namespace PizzaApp.Components
             if (Password?.Value != tmpPassword)
                 return "Passwords don't match";
             return null;
+        }
+
+        private async Task CreateAccount()
+        {
+            BtnCreateAccount = true;
+
+            await Task.Delay(1000);
+
+            BtnCreateAccount = false;
+        }
+
+        private void SetProfilePicture(string profilePic)
+        {
+            User.ProfilePicture = profilePic;
+            StateHasChanged();
         }
     }
 }
