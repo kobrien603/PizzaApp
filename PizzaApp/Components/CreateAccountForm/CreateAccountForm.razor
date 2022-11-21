@@ -11,7 +11,7 @@
     else
     {
         <MudItem xs="12">
-            <EditForm @ref="MudForm" OnValidSubmit="CreateAccount" Model="User">
+            <EditForm @ref="MudForm" OnValidSubmit="CreateAccount" Model="NewUser">
                 <DataAnnotationsValidator/>
                 <MudGrid>
                     <MudItem xs="12" sm="12" md="6" Class="d-flex align-self-center justify-md-start justify-center">
@@ -22,57 +22,75 @@
                     </MudItem>
                 </MudGrid>
                 <MudGrid>
-                    <MudItem xs="12" sm="6">
-                        <MudTextField T="string" 
-                            Label="First Name" 
-                            @bind-Value="User.FirstName"
-                            For="@(() => User.FirstName)"
+                    <MudItem xs="12" sm="12" md="6">
+                        <MudTextField Label="First Name" @bind-Value="NewUser.FirstName" For="@(() => NewUser.FirstName)" />
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="6">
+                        <MudTextField Label="Last Name" @bind-Value="NewUser.LastName" For="@(() => NewUser.LastName)" />
+                    </MudItem>
+                </MudGrid>
+
+                <MudGrid>
+                    <MudItem xs="12" sm="12" md="6">
+                        <MudTextField Label="Email" @bind-Value="NewUser.Email" For="@(() => NewUser.Email)" Immediate="true" />
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="6">
+                        <MudDatePicker Label="Date of Birth" @bind-Date="NewUser.DateOfBirth" For="@(() => NewUser.DateOfBirth)" OpenTo="OpenTo.Year" Rounded="true" Elevation="12" />
+                    </MudItem>
+                </MudGrid>
+
+                <MudGrid>
+                    <MudItem xs="12" sm="12" md="6">
+                        <MudTextField 
+                            @bind-Value="NewUser.Password"
+                            For="@(() => NewUser.Password)"
+                            Label="Password" 
+                            Variant="Variant.Text" 
+                            InputType="@PasswordInput" 
+                            Adornment="Adornment.End" 
+                            AdornmentIcon="@PasswordInputIcon" 
+                            OnAdornmentClick="TogglePasswordVisibility" 
+                            AdornmentAriaLabel="Show Password"
+                            Immediate="true"
                         />
                     </MudItem>
-                    <MudItem xs="12" sm="6">
-                        <MudTextField T="string" 
-                            Label="Last Name" 
-                            @bind-Value="User.LastName"
-                            For="@(() => User.LastName)"
+                    <MudItem xs="12" sm="12" md="6">
+                        <MudTextField @bind-Value="NewUser.ConfirmPassword" 
+                            For="@(() => NewUser.ConfirmPassword)"
+                            Label="Confirm Password" 
+                            Variant="Variant.Text" 
+                            InputType="@PasswordInput" 
+                            Adornment="Adornment.End" 
+                            AdornmentIcon="@PasswordInputIcon" 
+                            OnAdornmentClick="TogglePasswordVisibility" 
+                            AdornmentAriaLabel="Show Password" 
+                            Immediate="true"
                         />
                     </MudItem>
                 </MudGrid>
 
                 <MudGrid>
-                    <MudItem xs="12" sm="6">
-                        <MudTextField T="string" 
-                            Label="Email" 
-                            @bind-Value="User.Email"
-                            For="@(() => User.Email)"
-                        />
-                    </MudItem>
-                    <MudItem xs="12" sm="6">
-                        <MudDatePicker Label="Date of Birth" 
-                            @bind-Date="User.DateOfBirth"
-                            For="@(() => User.DateOfBirth)"
-                        />
-                    </MudItem>
-                </MudGrid>
-
-                <MudGrid>
-                    <MudItem xs="12" sm="6">
-                        <MudTextField @ref="Password" 
-                            T="string"
-                            Label="Password"
-                            @bind-Value="User.Password"
-                            For="@(() => User.Password)"
-                            InputType="InputType.Password"
-                            Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" 
-                            Required="true"
-                            RequiredError="Password is required!" 
-                        />
-                    </MudItem>
-                    <MudItem xs="12" sm="6">
-                        <MudTextField T="string"
-                            Label="Confirm Password"
-                            InputType="InputType.Password"
-                            Validation="@(new Func<string, string>(PasswordMatch))" 
-                        />
+                    <MudItem xs="12">
+                        <MudList Dense="true" Class="ma-0">
+                            <MudListItem Icon="@Icons.Filled.CheckCircleOutline" IconColor="@(NewUser.PasswordInRange ? Color.Success : Color.Error)" IconSize="Size.Small" Class="py-0">
+                                Between 8 and 30 characters
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Filled.CheckCircleOutline" IconColor="@(NewUser.PasswordLowerCase ? Color.Success : Color.Error)" IconSize="Size.Small" Class="py-0">
+                                At least one lower case character
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Filled.CheckCircleOutline" IconColor="@(NewUser.PasswordUpperCase ? Color.Success : Color.Error)" IconSize="Size.Small" Class="py-0">
+                                At least one upper case character
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Filled.CheckCircleOutline" IconColor="@(NewUser.PasswordHasNumber ? Color.Success : Color.Error)" IconSize="Size.Small" Class="py-0">
+                                At least one number
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Filled.CheckCircleOutline" IconColor="@(NewUser.PasswordSpecialChar ? Color.Success : Color.Error)" IconSize="Size.Small" Class="py-0">
+                                At least one special character (@("!@#$%^&*"))
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Filled.CheckCircleOutline" IconColor="@(NewUser.PasswordsMatch ? Color.Success : Color.Error)" IconSize="Size.Small" Class="py-0">
+                                Passwords match
+                            </MudListItem>
+                        </MudList>
                     </MudItem>
                 </MudGrid>
 

@@ -23,7 +23,7 @@ namespace PizzaApp.Components
 
         public string ProfilePicture { get; set; } = string.Empty;
 
-        public bool LoadingPicture { get; set; } = false;
+        public bool BtnLoadingPicture { get; set; } = false;
 
         /// <summary>
         /// upload file event - on file upload click
@@ -31,14 +31,14 @@ namespace PizzaApp.Components
         /// <param name="file"></param>
         private async void Upload(IBrowserFile file)
         {
-            LoadingPicture = true;
+            BtnLoadingPicture = true;
             await ConvertImageToBase64(file);
 
             if (!string.IsNullOrEmpty(ProfilePicture))
             {
                 await ReturnProfilePicture.InvokeAsync(ProfilePicture);
             }
-            LoadingPicture = false;
+            BtnLoadingPicture = false;
             StateHasChanged();
         }
 

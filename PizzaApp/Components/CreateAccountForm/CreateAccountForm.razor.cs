@@ -1,22 +1,33 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.EntityFrameworkCore;
 using MudBlazor;
+using PizzaApp.Server.DAL;
 using PizzaApp.Server.DAL.Models;
+using PizzaApp.Server.Helpers;
+using PizzaApp.Server.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static MudBlazor.Colors;
 
 namespace PizzaApp.Components
 {
     public partial class CreateAccountForm
     {
-        User User { get; set; } = new();
+        CreateUserModel NewUser { get; set; } = new();
         EditForm? MudForm { get; set; }
         bool BtnCreateAccount { get; set; }
-        MudTextField<string>? Password { get; set; }
         bool IsLoading { get; set; } = true;
+        bool ShowPassword { get; set; } = true;
+        InputType PasswordInput { get; set; } = InputType.Password;
+        string PasswordInputIcon { get; set; } = Icons.Material.Filled.VisibilityOff;
+
+        [Inject] IDbContextFactory<PizzaContext> PizzaContext { get; set; }
 
         protected override void OnAfterRender(bool firstRender)
         {
@@ -29,46 +40,64 @@ namespace PizzaApp.Components
             base.OnAfterRender(firstRender);
         }
 
-        private IEnumerable<string> PasswordStrength(string pw)
+        private void SetProfilePicture(string profilePic)
         {
-            if (string.IsNullOrWhiteSpace(pw))
-            {
-                yield return "Password is required!";
-                yield break;
-            }
-            if (pw.Length < 8)
-                yield return "Password must be at least of length 8";
-            if (!Regex.IsMatch(pw, @"[A-Z]"))
-                yield return "Password must contain at least one capital letter";
-            if (!Regex.IsMatch(pw, @"[a-z]"))
-                yield return "Password must contain at least one lowercase letter";
-            if (!Regex.IsMatch(pw, @"[0-9]"))
-                yield return "Password must contain at least one digit";
+            NewUser.ProfilePicture = profilePic;
+            StateHasChanged();
         }
 
-        private string? PasswordMatch(string tmpPassword)
+        private void TogglePasswordVisibility()
         {
-            if (string.IsNullOrWhiteSpace(tmpPassword))
-                return "Password is required!";
-
-            if (Password?.Value != tmpPassword)
-                return "Passwords don't match";
-            return null;
+            ShowPassword = !ShowPassword;
+            if (ShowPassword)
+            {
+                PasswordInput = InputType.Password;
+                PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            }
+            else
+            {
+                PasswordInput = InputType.Text;
+                PasswordInputIcon = Icons.Material.Filled.Visibility;
+            }
+            StateHasChanged();
         }
 
         private async Task CreateAccount()
         {
             BtnCreateAccount = true;
+            string hashPassword = PasswordHelper.CreateHashPassword(NewUser.Password);
+
+            User dbUser = new()
+            {
+                ID = 0, // always 0 to generate new id in db
+                Password = PasswordHelper.CreateHashPassword(NewUser.Password),
+                CreatedDate = DateTime.Now,
+                DateOfBirth = NewUser.DateOfBirth,
+                Email = NewUser.Email,
+                FirstName = NewUser.FirstName,
+                LastName = NewUser.LastName,
+                ModifiedDate = DateTime.Now,
+                PhoneNumber = NewUser.PhoneNumber,
+                ProfilePicture = NewUser.ProfilePicture,
+            };
+
+            using var context = PizzaContext.CreateDbContext();
+            using var repository = new PizzaRepository(context);
+
+            var response = repository.Users.InsertOrUpdate(dbUser);
+
+            if (response)
+            {
+                // navigate
+            }
+            else
+            {
+                // error
+            }
 
             await Task.Delay(1000);
 
             BtnCreateAccount = false;
-        }
-
-        private void SetProfilePicture(string profilePic)
-        {
-            User.ProfilePicture = profilePic;
-            StateHasChanged();
         }
     }
 }
