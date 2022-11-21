@@ -5,12 +5,12 @@
         <MudFileUpload T="IBrowserFile" FilesChanged="Upload">
             <ButtonTemplate>
                 <MudButton HtmlTag="label"
-                    Disabled="@LoadingPicture"
+                    Disabled="@BtnLoadingPicture"
                     Variant="Variant.Filled"
                     Color="Color.Primary"
                     StartIcon="@Icons.Filled.CloudUpload"
                     for="@context">
-                        @if (LoadingPicture)
+                        @if (BtnLoadingPicture)
                         {
                             <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
                             <MudText Class="ms-2">Processing</MudText>

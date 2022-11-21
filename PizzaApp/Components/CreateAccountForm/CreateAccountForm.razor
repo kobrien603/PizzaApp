@@ -23,58 +23,85 @@
                 </MudGrid>
                 <MudGrid>
                     <MudItem xs="12" sm="6">
-                        <MudTextField T="string" 
-                            Label="First Name" 
-                            @bind-Value="User.FirstName"
-                            For="@(() => User.FirstName)"
-                        />
+                        <MudTextField Label="First Name" @bind-Value="User.FirstName" For="@(() => User.FirstName)" />
                     </MudItem>
                     <MudItem xs="12" sm="6">
-                        <MudTextField T="string" 
-                            Label="Last Name" 
-                            @bind-Value="User.LastName"
-                            For="@(() => User.LastName)"
-                        />
+                        <MudTextField Label="Last Name" @bind-Value="User.LastName" For="@(() => User.LastName)" />
                     </MudItem>
                 </MudGrid>
 
                 <MudGrid>
                     <MudItem xs="12" sm="6">
-                        <MudTextField T="string" 
-                            Label="Email" 
-                            @bind-Value="User.Email"
-                            For="@(() => User.Email)"
-                        />
+                        <MudTextField Label="Email" @bind-Value="User.Email" For="@(() => User.Email)" Immediate="true" />
                     </MudItem>
                     <MudItem xs="12" sm="6">
-                        <MudDatePicker Label="Date of Birth" 
-                            @bind-Date="User.DateOfBirth"
-                            For="@(() => User.DateOfBirth)"
-                        />
+                        <MudDatePicker Label="Date of Birth" @bind-Date="User.DateOfBirth" For="@(() => User.DateOfBirth)" />
                     </MudItem>
                 </MudGrid>
 
                 <MudGrid>
                     <MudItem xs="12" sm="6">
-                        <MudTextField @ref="Password" 
-                            T="string"
-                            Label="Password"
-                            @bind-Value="User.Password"
+                        <MudTextField @bind-Value="User.Password" 
                             For="@(() => User.Password)"
-                            InputType="InputType.Password"
-                            Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" 
+                            Label="Password" 
+                            Variant="Variant.Text" 
+                            InputType="@PasswordInput" 
+                            Adornment="Adornment.End" 
+                            AdornmentIcon="@PasswordInputIcon" 
+                            OnAdornmentClick="TogglePasswordVisibility" 
+                            AdornmentAriaLabel="Show Password"
+                            Immediate="true"
+                        />
+                    </MudItem>
+                    <MudItem xs="12" sm="6">
+                        <MudTextField @bind-Value="User.ConfirmPassword" 
+                            For="@(() => User.ConfirmPassword)"
+                            Label="Confirm Password" 
+                            Variant="Variant.Text" 
+                            InputType="@PasswordInput" 
+                            Adornment="Adornment.End" 
+                            AdornmentIcon="@PasswordInputIcon" 
+                            OnAdornmentClick="TogglePasswordVisibility" 
+                            AdornmentAriaLabel="Show Password" 
+                            Immediate="true"
+                        />
+                    </MudItem>
+                </MudGrid>
+
+                @*<MudGrid>
+                    <MudItem xs="12" sm="6">
+                        <MudTextField @ref="Password"
+                            T="string"
+                            @bind-Value="User.Password" 
+                            For="@(() => User.Password)"
+                            Label="Password" 
+                            Variant="Variant.Text" 
+                            InputType="@PasswordInput" 
+                            Adornment="Adornment.End" 
+                            AdornmentIcon="@PasswordInputIcon" 
+                            OnAdornmentClick="TogglePasswordVisibility" 
+                            AdornmentAriaLabel="Show Password" 
+                            Validation="@(new Func<string, string?>(PasswordStrength))" 
                             Required="true"
                             RequiredError="Password is required!" 
                         />
                     </MudItem>
                     <MudItem xs="12" sm="6">
-                        <MudTextField T="string"
+                        <MudTextField
+                            T="string"
                             Label="Confirm Password"
-                            InputType="InputType.Password"
-                            Validation="@(new Func<string, string>(PasswordMatch))" 
+                            Variant="Variant.Text" 
+                            InputType="@PasswordInput" 
+                            Adornment="Adornment.End" 
+                            AdornmentIcon="@PasswordInputIcon" 
+                            OnAdornmentClick="TogglePasswordVisibility" 
+                            AdornmentAriaLabel="Show Password" 
+                            Validation="@(new Func<string, string?>(PasswordMatch))" 
+                            Required="true"
+                            RequiredError="Password is required!" 
                         />
                     </MudItem>
-                </MudGrid>
+                </MudGrid>*@
 
                 <MudGrid>
                     <MudItem xs="12" Class="d-flex justify-sm-end justify-center">
