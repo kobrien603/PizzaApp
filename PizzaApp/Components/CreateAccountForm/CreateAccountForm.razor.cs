@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 using PizzaApp.Server.DAL.Models;
 using PizzaApp.Server.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static MudBlazor.Colors;
 
 namespace PizzaApp.Components
 {
@@ -20,7 +23,6 @@ namespace PizzaApp.Components
         bool ShowPassword { get; set; } = true;
         InputType PasswordInput { get; set; } = InputType.Password;
         string PasswordInputIcon { get; set; } = Icons.Material.Filled.VisibilityOff;
-
 
         protected override void OnAfterRender(bool firstRender)
         {

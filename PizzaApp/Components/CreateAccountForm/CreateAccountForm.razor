@@ -41,7 +41,8 @@
 
                 <MudGrid>
                     <MudItem xs="12" sm="6">
-                        <MudTextField @bind-Value="User.Password" 
+                        <MudTextField 
+                            @bind-Value="User.Password"
                             For="@(() => User.Password)"
                             Label="Password" 
                             Variant="Variant.Text" 
@@ -68,40 +69,30 @@
                     </MudItem>
                 </MudGrid>
 
-                @*<MudGrid>
-                    <MudItem xs="12" sm="6">
-                        <MudTextField @ref="Password"
-                            T="string"
-                            @bind-Value="User.Password" 
-                            For="@(() => User.Password)"
-                            Label="Password" 
-                            Variant="Variant.Text" 
-                            InputType="@PasswordInput" 
-                            Adornment="Adornment.End" 
-                            AdornmentIcon="@PasswordInputIcon" 
-                            OnAdornmentClick="TogglePasswordVisibility" 
-                            AdornmentAriaLabel="Show Password" 
-                            Validation="@(new Func<string, string?>(PasswordStrength))" 
-                            Required="true"
-                            RequiredError="Password is required!" 
-                        />
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudList Dense="true" Class="ma-0">
+                            <MudListItem Icon="@Icons.Filled.CheckCircleOutline" IconColor="@(User.PasswordInRange ? Color.Success : Color.Error)" IconSize="Size.Small" Class="py-0">
+                                Between 8 and 30 characters
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Filled.CheckCircleOutline" IconColor="@(User.PasswordLowerCase ? Color.Success : Color.Error)" IconSize="Size.Small" Class="py-0">
+                                At least one lower case character
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Filled.CheckCircleOutline" IconColor="@(User.PasswordUpperCase ? Color.Success : Color.Error)" IconSize="Size.Small" Class="py-0">
+                                At least one upper case character
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Filled.CheckCircleOutline" IconColor="@(User.PasswordHasNumber ? Color.Success : Color.Error)" IconSize="Size.Small" Class="py-0">
+                                At least one number
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Filled.CheckCircleOutline" IconColor="@(User.PasswordSpecialChar ? Color.Success : Color.Error)" IconSize="Size.Small" Class="py-0">
+                                At least one special character (@("!@#$%^&*"))
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Filled.CheckCircleOutline" IconColor="@(User.PasswordsMatch ? Color.Success : Color.Error)" IconSize="Size.Small" Class="py-0">
+                                Passwords match
+                            </MudListItem>
+                        </MudList>
                     </MudItem>
-                    <MudItem xs="12" sm="6">
-                        <MudTextField
-                            T="string"
-                            Label="Confirm Password"
-                            Variant="Variant.Text" 
-                            InputType="@PasswordInput" 
-                            Adornment="Adornment.End" 
-                            AdornmentIcon="@PasswordInputIcon" 
-                            OnAdornmentClick="TogglePasswordVisibility" 
-                            AdornmentAriaLabel="Show Password" 
-                            Validation="@(new Func<string, string?>(PasswordMatch))" 
-                            Required="true"
-                            RequiredError="Password is required!" 
-                        />
-                    </MudItem>
-                </MudGrid>*@
+                </MudGrid>
 
                 <MudGrid>
                     <MudItem xs="12" Class="d-flex justify-sm-end justify-center">

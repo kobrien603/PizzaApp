@@ -22,7 +22,6 @@ namespace PizzaApp.Server.Attributes
         /// <returns></returns>
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            /*var password = (string)validationContext.ObjectInstance;*/
             string? password = value?.ToString();
             if (string.IsNullOrEmpty(password))
             {
@@ -46,7 +45,7 @@ namespace PizzaApp.Server.Attributes
                     return new ValidationResult("At least one upper case letter is required");
                 }
 
-                Regex specialChar = new(@"[!@#$%^&*()_+=\[{\]};:<>|./?,-]");
+                Regex specialChar = new(@"[!@#$%^&*]");
                 if (!specialChar.IsMatch(password))
                 {
                     return new ValidationResult("At least one special character is required");
