@@ -10,12 +10,24 @@ using System.Threading.Tasks;
 
 namespace PizzaApp.Components
 {
-    partial class CreateAccountForm
+    public partial class CreateAccountForm
     {
         User User { get; set; } = new();
         EditForm? MudForm { get; set; }
         bool BtnCreateAccount { get; set; }
         MudTextField<string>? Password { get; set; }
+        bool IsLoading { get; set; } = true;
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (firstRender)
+            {
+                IsLoading = false;
+                StateHasChanged();
+            }
+
+            base.OnAfterRender(firstRender);
+        }
 
         private IEnumerable<string> PasswordStrength(string pw)
         {
@@ -51,6 +63,12 @@ namespace PizzaApp.Components
             await Task.Delay(1000);
 
             BtnCreateAccount = false;
+        }
+
+        private void SetProfilePicture(string profilePic)
+        {
+            User.ProfilePicture = profilePic;
+            StateHasChanged();
         }
     }
 }

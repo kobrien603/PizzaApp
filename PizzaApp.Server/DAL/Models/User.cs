@@ -30,6 +30,8 @@ namespace PizzaApp.Server.DAL.Models
         [StringLength(30, ErrorMessage = "Password must be at least 8 characters long.", MinimumLength = 8)]
         public string Password { get; set; } = string.Empty;
 
+        public string ProfilePicture { get; set; } = string.Empty;
+
         public DateTime? DateOfBirth { get; set; }
 
         public string PhoneNumber { get; set; } = string.Empty;
