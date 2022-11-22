@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace PizzaApp.Server.Attributes
+namespace PizzaApp.Attributes
 {
     /// <summary>
     /// Validate the user has entered a valid birthday

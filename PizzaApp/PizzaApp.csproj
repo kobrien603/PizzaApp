@@ -8,17 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\Order\**" />
-    <Compile Remove="Shared\**" />
     <Compile Remove="wwwroot\js\**" />
-    <Content Remove="Pages\Order\**" />
-    <Content Remove="Shared\**" />
     <Content Remove="wwwroot\js\**" />
-    <EmbeddedResource Remove="Pages\Order\**" />
-    <EmbeddedResource Remove="Shared\**" />
     <EmbeddedResource Remove="wwwroot\js\**" />
-    <None Remove="Pages\Order\**" />
-    <None Remove="Shared\**" />
     <None Remove="wwwroot\js\**" />
   </ItemGroup>
 
@@ -35,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Order\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

@@ -21,11 +21,9 @@ namespace PizzaApp
         public static void TryAddPizzaAppRCL(this IServiceCollection services)
         {
             // add mudblazor
-            services.AddMudBlazorSnackbar();
             services.AddMudServices(config =>
             {
                 config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;
-
                 config.SnackbarConfiguration.PreventDuplicates = false;
                 config.SnackbarConfiguration.NewestOnTop = false;
                 config.SnackbarConfiguration.ShowCloseIcon = true;

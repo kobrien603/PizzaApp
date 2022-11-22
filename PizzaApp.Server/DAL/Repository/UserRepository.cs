@@ -40,5 +40,10 @@ namespace PizzaApp.Server.DAL.Repository
 
             return success;
         }
+
+        public bool EmailAlreadyRegistered(string email)
+        {
+            return _DAL.Users.Where(p => p.Email == email).Any();
+        }
     }
 }

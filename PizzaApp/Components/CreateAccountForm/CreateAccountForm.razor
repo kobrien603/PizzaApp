@@ -4,7 +4,7 @@
 <MudGrid>
     @if(IsLoading)
     {
-        <MudItem xs="12">
+        <MudItem xs="12" Class="pa-10 d-flex align-self-center justify-center">
             <MudProgressCircular Color="Color.Success" Indeterminate="true" />
         </MudItem>
     }
@@ -21,6 +21,7 @@
                         <UploadProfilePicture Label="Upload a Profile Picture" ReturnProfilePicture="SetProfilePicture" />
                     </MudItem>
                 </MudGrid>
+
                 <MudGrid>
                     <MudItem xs="12" sm="12" md="6">
                         <MudTextField Label="First Name" @bind-Value="NewUser.FirstName" For="@(() => NewUser.FirstName)" />
@@ -31,8 +32,14 @@
                 </MudGrid>
 
                 <MudGrid>
-                    <MudItem xs="12" sm="12" md="6">
+                    <MudItem xs="12">
                         <MudTextField Label="Email" @bind-Value="NewUser.Email" For="@(() => NewUser.Email)" Immediate="true" />
+                    </MudItem>
+                </MudGrid>
+
+                <MudGrid>
+                    <MudItem xs="12" sm="12" md="6">
+                        <MudTextField InputType="InputType.Telephone" InputMode="InputMode.tel" Label="Phone Number" @bind-Value="NewUser.PhoneNumber" For="@(() => NewUser.PhoneNumber)" Immediate="true" Mask="@(new PatternMask("000-000-0000"))" autocomplete=@("mud-disabled-"+Guid.NewGuid()) />
                     </MudItem>
                     <MudItem xs="12" sm="12" md="6">
                         <MudDatePicker Label="Date of Birth" @bind-Date="NewUser.DateOfBirth" For="@(() => NewUser.DateOfBirth)" OpenTo="OpenTo.Year" Rounded="true" Elevation="12" />

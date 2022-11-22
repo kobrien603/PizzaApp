@@ -82,7 +82,6 @@ namespace PizzaApp.Server.Helpers
 
                 var argon2A = new Argon2(config);
 
-
                 using SecureArray<byte> hashA = argon2A.Hash();
                 hashString = config.EncodeString(hashA.Buffer);
 

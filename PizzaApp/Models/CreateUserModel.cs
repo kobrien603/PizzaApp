@@ -5,12 +5,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PizzaApp.Server.Attributes;
+using PizzaApp.Attributes;
 using Microsoft.AspNetCore.Components;
 using PizzaApp.Server.DAL.Models;
 using System.Text.RegularExpressions;
 
-namespace PizzaApp.Server.Models
+namespace PizzaApp.Models
 {
     public class CreateUserModel
     {
@@ -54,9 +54,12 @@ namespace PizzaApp.Server.Models
 
         public string ProfilePicture { get; set; } = string.Empty;
 
+        [Required(ErrorMessage = "Phone number is required")]
         [BirthdayValidation]
         public DateTime? DateOfBirth { get; set; }
 
+        [Required(ErrorMessage = "Phone number is required")]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
         public string PhoneNumber { get; set; } = string.Empty;
 
         public bool PasswordInRange { get; set; }
