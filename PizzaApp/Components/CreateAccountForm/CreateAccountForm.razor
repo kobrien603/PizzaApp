@@ -11,7 +11,7 @@
     else
     {
         <MudItem xs="12">
-            <EditForm @ref="MudForm" OnValidSubmit="CreateAccount" Model="NewUser">
+            <EditForm OnValidSubmit="CreateAccount" Model="NewUser">
                 <DataAnnotationsValidator/>
                 <MudGrid>
                     <MudItem xs="12" sm="12" md="6" Class="d-flex align-self-center justify-md-start justify-center">
@@ -33,7 +33,7 @@
 
                 <MudGrid>
                     <MudItem xs="12">
-                        <MudTextField Label="Email" @bind-Value="NewUser.Email" For="@(() => NewUser.Email)" Immediate="true" />
+                        <MudTextField Label="Email" @bind-Value="NewUser.Email" For="@(() => NewUser.Email)" InputMode="InputMode.email" InputType="InputType.Email" Immediate="true" />
                     </MudItem>
                 </MudGrid>
 

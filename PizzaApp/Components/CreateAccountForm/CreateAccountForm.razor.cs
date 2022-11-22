@@ -19,16 +19,15 @@ namespace PizzaApp.Components
 {
     public partial class CreateAccountForm
     {
+        [CascadingParameter] ISnackbar Snackbar { get; set; }
+        [Inject] IDbContextFactory<PizzaContext> PizzaContext { get; set; }
+
         CreateUserModel NewUser { get; set; } = new();
-        EditForm? MudForm { get; set; }
         bool BtnCreateAccount { get; set; }
         bool IsLoading { get; set; } = true;
         bool ShowPassword { get; set; } = true;
         InputType PasswordInput { get; set; } = InputType.Password;
         string PasswordInputIcon { get; set; } = Icons.Material.Filled.VisibilityOff;
-
-        [CascadingParameter] ISnackbar Snackbar { get; set; }
-        [Inject] IDbContextFactory<PizzaContext> PizzaContext { get; set; }
 
         protected override void OnAfterRender(bool firstRender)
         {
@@ -106,6 +105,7 @@ namespace PizzaApp.Components
             await Task.Delay(1000);
 
             BtnCreateAccount = false;
+            StateHasChanged();
         }
     }
 }
