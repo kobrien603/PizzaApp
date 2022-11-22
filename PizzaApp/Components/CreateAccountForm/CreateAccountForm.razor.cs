@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
+using PizzaApp.Models;
 using PizzaApp.Server.DAL;
 using PizzaApp.Server.DAL.Models;
 using PizzaApp.Server.Helpers;
-using PizzaApp.Server.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -27,6 +27,7 @@ namespace PizzaApp.Components
         InputType PasswordInput { get; set; } = InputType.Password;
         string PasswordInputIcon { get; set; } = Icons.Material.Filled.VisibilityOff;
 
+        [CascadingParameter] ISnackbar Snackbar { get; set; }
         [Inject] IDbContextFactory<PizzaContext> PizzaContext { get; set; }
 
         protected override void OnAfterRender(bool firstRender)
@@ -65,34 +66,41 @@ namespace PizzaApp.Components
         private async Task CreateAccount()
         {
             BtnCreateAccount = true;
-            string hashPassword = PasswordHelper.CreateHashPassword(NewUser.Password);
-
-            User dbUser = new()
-            {
-                ID = 0, // always 0 to generate new id in db
-                Password = PasswordHelper.CreateHashPassword(NewUser.Password),
-                CreatedDate = DateTime.Now,
-                DateOfBirth = NewUser.DateOfBirth,
-                Email = NewUser.Email,
-                FirstName = NewUser.FirstName,
-                LastName = NewUser.LastName,
-                ModifiedDate = DateTime.Now,
-                PhoneNumber = NewUser.PhoneNumber,
-                ProfilePicture = NewUser.ProfilePicture,
-            };
 
             using var context = PizzaContext.CreateDbContext();
             using var repository = new PizzaRepository(context);
 
-            var response = repository.Users.InsertOrUpdate(dbUser);
-
-            if (response)
-            {
-                // navigate
-            }
+            // check if email is already in use
+            if (repository.Users.EmailAlreadyRegistered(NewUser.Email)) {
+                Snackbar.Add("Email has already been registered. Please try again", Severity.Error);
+            } 
             else
             {
-                // error
+
+                User dbUser = new()
+                {
+                    ID = 0, // always 0 to generate new id in db
+                    Password = PasswordHelper.CreateHashPassword(NewUser.Password),
+                    CreatedDate = DateTime.Now,
+                    DateOfBirth = NewUser.DateOfBirth,
+                    Email = NewUser.Email,
+                    FirstName = NewUser.FirstName,
+                    LastName = NewUser.LastName,
+                    ModifiedDate = DateTime.Now,
+                    PhoneNumber = NewUser.PhoneNumber,
+                    ProfilePicture = NewUser.ProfilePicture,
+                };
+
+                var response = repository.Users.InsertOrUpdate(dbUser);
+
+                if (response)
+                {
+                    // navigate
+                }
+                else
+                {
+                    // error
+                }
             }
 
             await Task.Delay(1000);

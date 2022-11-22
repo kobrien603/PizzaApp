@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace PizzaApp.Server.Attributes
+namespace PizzaApp.Attributes
 {
     /// <summary>
     /// attribute created to validate minimum password requirements before being able to submit the form
