@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 using PizzaApp;
+using PizzaApp.Server;
 using PizzaApp.Server.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,30 +16,7 @@ builder.Services.AddServerSideBlazor();
 
 // add DI from PizzaApp
 builder.Services.TryAddPizzaAppRCL();
-
-// add database
-var connectionString = builder.Configuration.GetConnectionString("PizzaConnection");
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddDbContextFactory<PizzaContext>(options =>
-{
-    options.UseMySql(
-        connectionString,
-        ServerVersion.AutoDetect(connectionString),
-        x => x.MigrationsAssembly("PizzaApp.Server")
-    );
-});
-
-builder.Services.AddDbContext<PizzaContext>(options =>
-{
-    options.UseMySql(
-        connectionString,
-        ServerVersion.AutoDetect(connectionString),
-        x => x.MigrationsAssembly("PizzaApp.Server")
-    );
-});
-
-builder.Services.AddEntityFrameworkMySql();
-//new EntityFrameworkRelationalDesignServicesBuilder(builder.Services).TryAddCoreServices();
+builder.Services.TryAndAddPizzaServer();
 
 var app = builder.Build();
 
