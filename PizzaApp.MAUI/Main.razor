@@ -1,0 +1,17 @@
+﻿@using System.Reflection
+
+<Router AppAssembly="@typeof(Main).Assembly" AdditionalAssemblies="Assemblies">
+	<Found Context="routeData">
+		<RouteView RouteData="@routeData" DefaultLayout="@typeof(PizzaApp.MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+	</Found>
+	<NotFound>
+		<LayoutView Layout="@typeof(PizzaApp.MainLayout)">
+			<p role="alert">Sorry, there's nothing at this address.</p>
+		</LayoutView>
+	</NotFound>
+</Router>
+
+@code {
+	private List<Assembly> Assemblies => new List<Assembly>() { typeof(PizzaApp.Index).Assembly };
+}
