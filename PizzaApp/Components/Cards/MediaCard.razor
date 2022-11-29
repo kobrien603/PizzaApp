@@ -1,0 +1,12 @@
+﻿@namespace PizzaApp.Components
+
+<MudCard>
+    <MudCardMedia Image="@Image" Height="@Height" />
+    <MudCardContent>
+        <MudText Typo="Typo.h5">@Title</MudText>
+        <MudText Typo="Typo.body2">@Message</MudText>
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" Href="@RedirectURL">@RedirectText</MudButton>
+    </MudCardActions>
+</MudCard>

@@ -1,0 +1,30 @@
+﻿@namespace PizzaApp.Components
+
+<MudGrid>
+    <MudItem xs="12" sm="12" md="6" Class="d-flex align-self-center justify-md-start justify-center">
+        <MudFileUpload T="IBrowserFile" FilesChanged="Upload">
+            <ButtonTemplate>
+                <MudButton HtmlTag="label"
+                    Disabled="@BtnLoadingPicture"
+                    Variant="Variant.Filled"
+                    Color="Color.Primary"
+                    StartIcon="@Icons.Filled.CloudUpload"
+                    for="@context">
+                        @if (BtnLoadingPicture)
+                        {
+                            <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>
+                            <MudText Class="ms-2">Processing</MudText>
+                        }
+                        else
+                        {
+                            <MudText>@Label</MudText>
+                        }
+                </MudButton>
+            </ButtonTemplate>
+        </MudFileUpload>
+    </MudItem>
+
+    <MudItem xs="12" sm="12" md="6" Class="d-flex align-self-center justify-center">
+        <DisplayProfilePicture ProfilePicture="@ProfilePicture" Size="Size.Large" />
+    </MudItem>
+</MudGrid>
