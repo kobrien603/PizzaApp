@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: pizzaapp.db
+    restart: always
+    environment:
+      - MYSQL_DATABASE=pizza
+      - MYSQL_USER=pizzaadmin
+      - MYSQL_PASSWORD=&Naa4F4uRT2F@Wu5Xu^dLz!5m!Z5DB
+      - MYSQL_ROOT_PASSWORD=tbRPyVKyyan$&g5cB^%RrVkeWjyBTH
+    ports:
+      - '3306:3306'
+  redis:
+    image: redis:7.0.5
+    container_name: pizzaapp.redis
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass JELDuAuFvBg34gfeAs95ww5c68wwn7
+  pizzaapp:
+    image: pizzaapp.server
+    container_name: pizzaapp.server
+    depends_on:
+      - db
+      - redis
+    links:
+      - db
+      - redis
+    environment:
+      NODE_ENV: local
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: pizzaadmin
+      DB_PASSWORD: '&Naa4F4uRT2F@Wu5Xu^dLz!5m!Z5DB'
+      DB_NAME: pizza
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: JELDuAuFvBg34gfeAs95ww5c68wwn7
+    build:
+      context: .
+      dockerfile: PizzaApp.Server/Dockerfile

@@ -1,1 +1,1 @@
-﻿dotnet ef migrations add UpdateUsersTable --project PizzaApp.Server --startup-project PizzaApp.Web --verbose -o DAL/Migrations
+﻿dotnet ef migrations add UpdateUsersTable --project PizzaApp.Server --startup-project PizzaApp.Server --verbose -o DAL/Migrations

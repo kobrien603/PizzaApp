@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using PizzaApp.Server.DAL;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +10,29 @@ builder.Services.AddRazorPages();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// add database
+string connectionString = builder.Configuration.GetConnectionString("PizzaConnection");
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddDbContextFactory<PizzaContext>(options =>
+{
+	options.UseMySql(
+		connectionString,
+		ServerVersion.AutoDetect(connectionString),
+		x => x.MigrationsAssembly("PizzaApp.Server")
+	);
+});
+
+builder.Services.AddDbContext<PizzaContext>(options =>
+{
+	options.UseMySql(
+		connectionString,
+		ServerVersion.AutoDetect(connectionString),
+		x => x.MigrationsAssembly("PizzaApp.Server")
+	);
+});
+
+builder.Services.AddEntityFrameworkMySql();
 
 var app = builder.Build();
 
