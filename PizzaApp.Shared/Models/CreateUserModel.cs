@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PizzaApp.Attributes;
-using Microsoft.AspNetCore.Components;
 using System.Text.RegularExpressions;
 
 namespace PizzaApp.Models

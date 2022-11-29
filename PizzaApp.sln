@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaApp", "PizzaApp\PizzaA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaApp.Web", "PizzaApp.Web\PizzaApp.Web.csproj", "{422484C0-AF61-4F01-802D-09911C7DB08C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaApp.MAUI", "PizzaApp.MAUI\PizzaApp.MAUI.csproj", "{C85AA657-B0C7-414C-B001-FC5145289D62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaApp.MAUI", "PizzaApp.MAUI\PizzaApp.MAUI.csproj", "{C85AA657-B0C7-414C-B001-FC5145289D62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaApp.Shared", "PizzaApp.Shared\PizzaApp.Shared.csproj", "{054A8357-A36C-4C26-9FB5-2F713C2D4943}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{C85AA657-B0C7-414C-B001-FC5145289D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C85AA657-B0C7-414C-B001-FC5145289D62}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C85AA657-B0C7-414C-B001-FC5145289D62}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{054A8357-A36C-4C26-9FB5-2F713C2D4943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{054A8357-A36C-4C26-9FB5-2F713C2D4943}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{054A8357-A36C-4C26-9FB5-2F713C2D4943}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{054A8357-A36C-4C26-9FB5-2F713C2D4943}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -16,6 +16,10 @@
     <PackageReference Include="MudBlazor" Version="6.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PizzaApp.Shared\PizzaApp.Shared.csproj" />
+  </ItemGroup>
+
 
 
 </Project>
