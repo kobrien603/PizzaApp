@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaApp.Server", "PizzaApp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaApp", "PizzaApp\PizzaApp.csproj", "{AFE3BE0E-7975-4266-B48B-1B9CFD008AE0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaApp.Web", "PizzaApp.Web\PizzaApp.Web.csproj", "{422484C0-AF61-4F01-802D-09911C7DB08C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AFE3BE0E-7975-4266-B48B-1B9CFD008AE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFE3BE0E-7975-4266-B48B-1B9CFD008AE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFE3BE0E-7975-4266-B48B-1B9CFD008AE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{422484C0-AF61-4F01-802D-09911C7DB08C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{422484C0-AF61-4F01-802D-09911C7DB08C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{422484C0-AF61-4F01-802D-09911C7DB08C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{422484C0-AF61-4F01-802D-09911C7DB08C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

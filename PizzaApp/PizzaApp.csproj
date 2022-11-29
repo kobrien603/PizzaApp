@@ -8,11 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\Order\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\libs\" />
   </ItemGroup>

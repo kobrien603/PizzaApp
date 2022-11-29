@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using PizzaApp.Models;
 using System;
@@ -18,7 +15,6 @@ namespace PizzaApp.Components
     {
         [CascadingParameter] ISnackbar Snackbar { get; set; }
         //[Inject] IDbContextFactory<PizzaContext> PizzaContext { get; set; }
-        [Inject] HttpContext HttpContext { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
 
         bool BtnLogin { get; set; }
