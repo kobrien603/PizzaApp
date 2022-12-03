@@ -3,17 +3,8 @@ using PizzaApp.Server.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 // add database
 string connectionString = builder.Configuration.GetConnectionString("PizzaConnection");
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDbContextFactory<PizzaContext>(options =>
 {
 	options.UseMySql(
@@ -33,13 +24,22 @@ builder.Services.AddDbContext<PizzaContext>(options =>
 });
 
 builder.Services.AddEntityFrameworkMySql();
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+	app.UseSwagger();
     app.UseSwaggerUI();
 
     app.UseMigrationsEndPoint();
@@ -57,10 +57,7 @@ app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
-//app.UseIdentityServer();
-app.UseAuthentication();
-app.UseAuthorization();
-
+app.UseRouting();
 
 app.MapRazorPages();
 app.MapControllers();

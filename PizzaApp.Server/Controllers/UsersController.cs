@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PizzaApp.Models;
 using PizzaApp.Server.DAL;
+using PizzaApp.Server.DAL.Models;
+using PizzaApp.Server.Helpers;
+using PizzaApp.Shared.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,13 +14,10 @@ namespace PizzaApp.Server.Controllers
 	public class UsersController : ControllerBase
 	{
 		private readonly PizzaContext _context;
-		private readonly PizzaRepository repository;
 
 		public UsersController(PizzaContext context)
 		{
 			_context = context;
-			// todo - consider just using this in code instead of init here so we can use using and dispose properly
-			repository = new(_context); 
 		}
 
 		// GET: api/<UserController>
@@ -34,11 +34,61 @@ namespace PizzaApp.Server.Controllers
 			return "value";
 		}
 
-		// POST api/<UserController>
-		[HttpPost]
-		public void Post([FromBody] CreateUserModel model)
+		/// <summary>
+		/// create new user - store in db
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
+		[HttpPost("create-user")]
+		public ValidResponse CreateUser([FromBody] CreateUserModel model)
 		{
-			// map to DAL object
+			ValidResponse response = new();
+
+			try
+			{
+				// init repository
+				using var repository = new PizzaRepository(_context);
+
+				// check if email is already in use
+				if (repository.Users.EmailAlreadyRegistered(model.Email))
+				{
+					response.IsValid = false;
+					response.ResponseMessage = "Email has already been registered. Please try again";
+				}
+				else
+				{
+					// create user
+					var user = new User()
+					{
+						ID = 0,
+						CreatedDate = DateTime.Now,
+						DateOfBirth = model.DateOfBirth,
+						Email = model.Email,
+						FirstName = model.FirstName,
+						LastName = model.LastName,
+						ModifiedDate = DateTime.Now,
+						Password = PasswordHelper.CreateHashPassword(model.Password),
+						PhoneNumber = model.PhoneNumber,
+						ProfilePicture = model.ProfilePicture
+					};
+
+                    repository.Users.InsertOrUpdate(user);
+
+					var cookieCreated = new CookieHelper().CreateCookie(user.ID);
+
+                    // valid response
+                    response.IsValid = cookieCreated.IsValid;
+                    response.ResponseMessage = cookieCreated.IsValid ? cookieCreated.Data : cookieCreated.ResponseMessage;
+                }
+			}
+			catch (Exception e)
+			{
+				// todo - log
+				response.IsValid = false;
+				response.ResponseMessage = "Error creating user. Please try again";
+			}
+
+			return response;
 		}
 
 		// PUT api/<UserController>/5

@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using MudBlazor;
 using MudBlazor.Services;
 using System;
@@ -15,10 +18,10 @@ namespace PizzaApp
         /// used to help inject DI projects from PizzaApp to any web or app tool that connects to it
         /// ex: in PizzaApp.Web we add builder.Services.TryAddPizzaAppRCL();
         /// </summary>
-        public static void TryAddPizzaAppRCL(this IServiceCollection services)
+        public static void InjectPizzaApp(this WebAssemblyHostBuilder builder)
         {
             // add mudblazor
-            services.AddMudServices(config =>
+            builder.Services.AddMudServices(config =>
             {
                 config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;
                 config.SnackbarConfiguration.PreventDuplicates = false;
@@ -29,6 +32,16 @@ namespace PizzaApp
                 config.SnackbarConfiguration.ShowTransitionDuration = 500;
                 config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
             });
+
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+            //builder.Services.AddHttpClient("PizzaApp.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+            //    .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+
+            //// Supply HttpClient instances that include access tokens when making requests to the server project
+            //builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("PizzaApp.ServerAPI"));
+
+            //builder.Services.AddApiAuthorization();
         }
     }
 }

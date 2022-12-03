@@ -1,21 +1,24 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using PizzaApp.Models;
+using PizzaApp.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static System.Net.WebRequestMethods;
 
 namespace PizzaApp.Components
 {
     public partial class LoginForm
     {
-        [CascadingParameter] ISnackbar Snackbar { get; set; }
-        //[Inject] IDbContextFactory<PizzaContext> PizzaContext { get; set; }
+        [Inject] HttpClient Http { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
+        [CascadingParameter] ISnackbar Snackbar { get; set; }
 
         bool BtnLogin { get; set; }
         bool IsLoading { get; set; } = true;
@@ -39,32 +42,13 @@ namespace PizzaApp.Components
         {
             BtnLogin = true;
 
-            //using var context = PizzaContext.CreateDbContext();
-            //using var repository = new PizzaRepository(context);
+            var request = await Http.PostAsJsonAsync("api/login", Model);
+            var response = await request.Content.ReadFromJsonAsync<ValidResponse>();
 
-            //var dbUser = repository.Users.GetUserByEmail(Model.Email);
-
-            //// validate dbUser is found and password is correct
-            //if (dbUser != null && PasswordHelper.ValidatePassword(Model.Password, dbUser.Password))
-            //{
-            //    Snackbar.Add($"Logged in successful! Welcome back {dbUser.FirstName}");
-
-            //    // todo - add session cookie
-            //    ClaimsIdentity claimsIdentity = new(new List<Claim>
-            //    {
-            //         new Claim(ClaimTypes.NameIdentifier, dbUser.FirstName)
-            //     }, "auth");
-
-            //    ClaimsPrincipal claims = new(claimsIdentity);
-            //    await HttpContext.SignInAsync(claims);
-            //    Navigation.NavigateTo("/");
-            //}
-            //else
-            //{
-            //    Snackbar.Add("Invalid credentials. Please try again", Severity.Error);
-
-            //    // todo - login attempts
-            //}
+            Snackbar.Add(
+                response.ResponseMessage,
+                response.IsValid ? Severity.Success : Severity.Error
+            );
 
             await Task.Delay(1000);
 
