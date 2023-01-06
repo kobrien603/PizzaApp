@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+﻿global using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor;
 using MudBlazor.Services;
+using PizzaApp.Provider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +43,9 @@ namespace PizzaApp
             //// Supply HttpClient instances that include access tokens when making requests to the server project
             //builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("PizzaApp.ServerAPI"));
 
-            //builder.Services.AddApiAuthorization();
+            // builder.Services.AddApiAuthorization();
+            builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
+            builder.Services.AddAuthorizationCore();
         }
     }
 }

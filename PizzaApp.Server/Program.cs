@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using PizzaApp.Server.DAL;
 
@@ -25,6 +26,8 @@ builder.Services.AddDbContext<PizzaContext>(options =>
 
 builder.Services.AddEntityFrameworkMySql();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddAuthentication();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -58,6 +61,9 @@ app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();
