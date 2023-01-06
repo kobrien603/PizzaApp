@@ -46,9 +46,9 @@ namespace PizzaApp.Server.DAL.Repository
             return _DAL.Users.Where(p => p.Email == email).Any();
         }
 
-        public User GetUserByEmail(string email)
+        public User? GetUserByEmail(string email)
         {
-            return _DAL.Users.FirstOrDefault(p => p.Email == email);
+            return _DAL.Users.Where(p => p.Email == email).FirstOrDefault();
         }
     }
 }

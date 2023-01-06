@@ -74,11 +74,8 @@ namespace PizzaApp.Server.Controllers
 
                     repository.Users.InsertOrUpdate(user);
 
-					var cookieCreated = new CookieHelper().CreateCookie(user.ID);
-
                     // valid response
-                    response.IsValid = cookieCreated.IsValid;
-                    response.ResponseMessage = cookieCreated.IsValid ? cookieCreated.Data : cookieCreated.ResponseMessage;
+                    response = new CookieHelper().CreateCookie(user.ID);
                 }
 			}
 			catch (Exception e)

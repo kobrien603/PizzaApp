@@ -37,10 +37,7 @@ namespace PizzaApp.Server.Controllers
                 var dbUser = repository.Users.GetUserByEmail(model.Email);
                 if (dbUser != null && PasswordHelper.ValidatePassword(model.Password, dbUser.Password))
                 {
-                    var cookieCreated = new CookieHelper().CreateCookie(dbUser.ID);
-
-                    response.IsValid = cookieCreated.IsValid;
-                    response.ResponseMessage = cookieCreated.IsValid ? cookieCreated.Data : cookieCreated.ResponseMessage;
+                    response = new CookieHelper().CreateCookie(dbUser.ID);
                 }
                 else
                 {

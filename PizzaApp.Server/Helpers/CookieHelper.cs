@@ -9,16 +9,15 @@ namespace PizzaApp.Server.Helpers
 {
     public class CookieHelper
     {
-        public ValidResponse<string> CreateCookie(int userID)
+        public ValidResponse CreateCookie(int userID)
         {
-            ValidResponse<string> response = new();
+            ValidResponse response = new();
             try
             {
                 response.IsValid = true;
-                response.Data = EncryptionHelper.EncryptString($"{userID};{DateTime.Today.AddHours(24)}");
-                response.ResponseMessage = "Successful";
+                response.ResponseMessage = EncryptionHelper.EncryptString($"{userID};{DateTime.Today.AddHours(24)}");
             }
-            catch(Exception ex)
+            catch(Exception e)
             {
                 // todo - log
                 response.IsValid = false;
