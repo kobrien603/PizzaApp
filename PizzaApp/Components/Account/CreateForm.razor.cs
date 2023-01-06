@@ -8,11 +8,10 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.WebRequestMethods;
 
-namespace PizzaApp.Pages.Account
+namespace PizzaApp.Components
 {
-    public partial class Create
+    public partial class CreateForm
     {
 		[Inject] HttpClient Http { get; set; }
 		[CascadingParameter] ISnackbar Snackbar { get; set; }
@@ -56,7 +55,7 @@ namespace PizzaApp.Pages.Account
             StateHasChanged();
         }
 
-        private async Task CreateAccount()
+        private async Task CreateAccountAsync()
         {
             BtnCreateAccount = true;
 

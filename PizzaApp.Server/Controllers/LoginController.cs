@@ -24,7 +24,7 @@ namespace PizzaApp.Server.Controllers
 		/// <param name="model"></param>
 		/// <returns></returns>
 		[HttpPost]
-        public ValidResponse Login([FromBody] LoginModel model)
+        public async Task<ValidResponse> Login([FromBody] LoginModel model)
         {
             ValidResponse response = new();
 
@@ -34,7 +34,7 @@ namespace PizzaApp.Server.Controllers
                 using var repository = new PizzaRepository(_context);
 
                 // get user
-                var dbUser = repository.Users.GetUserByEmail(model.Email);
+                var dbUser = await repository.Users.GetUserByEmail(model.Email);
                 if (dbUser != null && PasswordHelper.ValidatePassword(model.Password, dbUser.Password))
                 {
                     response = new CookieHelper().CreateCookie(dbUser.ID);

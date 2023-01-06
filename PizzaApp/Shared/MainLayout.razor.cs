@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace PizzaApp
 {
     public partial class MainLayout
-    {
-        bool MenuOpened = false;
-        
+    {        
         [Inject] ISnackbar Snackbar { get; set; }
+
+        bool MenuOpened { get; set; }
 
         void DrawerToggle()
         {

@@ -40,7 +40,7 @@ namespace PizzaApp.Server.Controllers
 		/// <param name="model"></param>
 		/// <returns></returns>
 		[HttpPost("create-user")]
-		public ValidResponse CreateUser([FromBody] CreateUserModel model)
+		public async Task<ValidResponse> CreateUser([FromBody] CreateUserModel model)
 		{
 			ValidResponse response = new();
 
@@ -50,7 +50,7 @@ namespace PizzaApp.Server.Controllers
 				using var repository = new PizzaRepository(_context);
 
 				// check if email is already in use
-				if (repository.Users.EmailAlreadyRegistered(model.Email))
+				if (await repository.Users.EmailAlreadyRegistered(model.Email))
 				{
 					response.IsValid = false;
 					response.ResponseMessage = "Email has already been registered. Please try again";
@@ -72,7 +72,7 @@ namespace PizzaApp.Server.Controllers
 						ProfilePicture = model.ProfilePicture
 					};
 
-                    repository.Users.InsertOrUpdate(user);
+                    await repository.Users.InsertOrUpdate(user);
 
                     // valid response
                     response = new CookieHelper().CreateCookie(user.ID);

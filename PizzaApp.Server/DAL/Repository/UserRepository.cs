@@ -1,4 +1,5 @@
-﻿using PizzaApp.Server.DAL.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PizzaApp.Server.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace PizzaApp.Server.DAL.Repository
 
         public UserRepository(PizzaContext context) => _DAL = context;
 
-        public bool InsertOrUpdate(User user)
+        public async Task<bool> InsertOrUpdate(User user)
         {
             bool success;
 
@@ -21,14 +22,14 @@ namespace PizzaApp.Server.DAL.Repository
             {
                 if (user.ID == 0)
                 {
-                    _DAL.Users.Add(user);
+                    await _DAL.Users.AddAsync(user);
                 }
                 else
                 {
                     _DAL.Users.Update(user);
                 }
 
-                _DAL.SaveChanges();
+                await _DAL.SaveChangesAsync();
 
                 success = true;
             }
@@ -41,14 +42,14 @@ namespace PizzaApp.Server.DAL.Repository
             return success;
         }
 
-        public bool EmailAlreadyRegistered(string email)
+        public async Task<bool> EmailAlreadyRegistered(string email)
         {
-            return _DAL.Users.Where(p => p.Email == email).Any();
+            return await _DAL.Users.Where(p => p.Email == email).AnyAsync();
         }
 
-        public User? GetUserByEmail(string email)
+        public async Task<User?> GetUserByEmail(string email)
         {
-            return _DAL.Users.Where(p => p.Email == email).FirstOrDefault();
+            return await _DAL.Users.Where(p => p.Email == email).FirstOrDefaultAsync();
         }
     }
 }
