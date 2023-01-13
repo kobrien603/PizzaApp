@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace PizzaApp.Server.DAL.Models
 {
+	[Table("company")]
 	public class Company
 	{
 		[Key]

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MudBlazor.Extensions;
 using PizzaApp.Models;
 using PizzaApp.Server.DAL;
 using PizzaApp.Server.DAL.Models;
@@ -62,7 +63,7 @@ namespace PizzaApp.Server.Controllers
 					{
 						ID = 0,
 						CreatedDate = DateTime.Now,
-						DateOfBirth = model.DateOfBirth,
+						DateOfBirth = model.DateOfBirth.HasValue ? new DateOnly(model.DateOfBirth.Value.Year, model.DateOfBirth.Value.Month, model.DateOfBirth.Value.Day) : null,
 						Email = model.Email,
 						FirstName = model.FirstName,
 						LastName = model.LastName,

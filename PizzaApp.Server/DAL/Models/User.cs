@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace PizzaApp.Server.DAL.Models
 {
+    [Table("users")]
     public class User
     {
         [Key]
@@ -18,10 +19,11 @@ namespace PizzaApp.Server.DAL.Models
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public string ProfilePicture { get; set; } = string.Empty;
-        public DateTime? DateOfBirth { get; set; }
+        public DateOnly? DateOfBirth { get; set; }
         public string PhoneNumber { get; set; } = string.Empty;
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public DateTime ModifiedDate { get; set; } = DateTime.Now;
-
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedDate { get; set; }
     }
 }
