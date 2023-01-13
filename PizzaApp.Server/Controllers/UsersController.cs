@@ -22,32 +22,75 @@ namespace PizzaApp.Server.Controllers
 			_context = context;
 		}
 
-		// GET: api/<UserController>
-		[HttpGet]
-		public IEnumerable<string> Get()
-		{
-			return new string[] { "value1", "value2" };
-		}
+        [HttpGet("get-user")]
+        public async Task<ValidResponse<AuthUser>> GetAuthUser()
+        {
+			var response = new ValidResponse<AuthUser>();
 
-		// GET api/<UserController>/5
-		[HttpGet("{id}")]
-		public string Get(int id)
-		{
-			return "value";
-		}
+			try
+			{
+                string token = HttpContext.Request.Cookies["pizza_app_session"] ?? "";
+				if (!string.IsNullOrEmpty(token))
+				{
+                    string decyrptedCookie = EncryptionHelper.DecryptString(token);
+					if (int.TryParse(decyrptedCookie.Split(';')[0], out int userID))
+					{
+                        using var repository = new PizzaRepository(_context);
 
-		[HttpGet("get-user")]
-		public async Task<ValidResponse<AuthUser>> GetAuthUser()
-		{
-			return new ValidResponse<AuthUser>();
-		}
+						var dbUser = await repository.Users.GetUserByID(userID);
+						if (dbUser != null)
+						{
+							var authUser = new AuthUser()
+							{
+								ID = dbUser.ID,
+								CreatedDate = dbUser.CreatedDate,
+								DateOfBirth = dbUser.DateOfBirth,
+								Email = dbUser.Email,
+								FirstName = dbUser.FirstName,
+								LastName = dbUser.LastName,
+								ModifiedDate = dbUser.ModifiedDate,
+								PhoneNumber = dbUser.PhoneNumber,
+								ProfilePicture = dbUser.ProfilePicture
+							};
 
-		/// <summary>
-		/// create new user - store in db
-		/// </summary>
-		/// <param name="model"></param>
-		/// <returns></returns>
-		[HttpPost("create-user")]
+							response.IsValid = true;
+							response.Data = authUser;
+							response.ResponseMessage = "Success";
+						}
+						else
+						{
+							response.IsValid = false;
+							response.ResponseMessage = "Error fetching user. Please contact support";
+						}
+                    }
+					else
+					{
+                        response.IsValid = false;
+                        response.ResponseMessage = "Error fetching user. Please contact support";
+                    }
+                }
+				else
+				{
+                    response.IsValid = false;
+                    response.ResponseMessage = "Error fetching user. Please contact support";
+                }
+            }
+			catch (Exception e)
+			{
+				// log
+                response.IsValid = false;
+                response.ResponseMessage = "Error fetching user. Please contact support";
+            }
+
+			return response;
+        }
+
+        /// <summary>
+        /// create new user - store in db
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost("create-user")]
 		public async Task<ValidResponse> CreateUser([FromBody] CreateUserModel model)
 		{
 			ValidResponse response = new();

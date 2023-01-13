@@ -3,8 +3,10 @@ using PizzaApp.Server.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using static Duende.IdentityServer.Models.IdentityResources;
 
 namespace PizzaApp.Server.DAL.Repository
 {
@@ -43,6 +45,11 @@ namespace PizzaApp.Server.DAL.Repository
         public async Task<User?> GetUserByEmail(string email)
         {
             return await _DAL.Users.Where(p => p.Email == email).FirstOrDefaultAsync();
+        }
+
+        public async Task<User?> GetUserByID(int id)
+        {
+            return await _DAL.Users.Where(p => p.ID == id).FirstOrDefaultAsync();
         }
     }
 }

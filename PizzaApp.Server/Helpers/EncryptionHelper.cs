@@ -14,7 +14,7 @@ namespace PizzaApp.Server.Helpers
 
             using var aesAlg = Aes.Create();
             aesAlg.Key = Encoding.UTF8.GetBytes(Key);
-            aesAlg.IV = Encoding.UTF8.GetBytes(IVKey);
+            //aesAlg.IV = Encoding.UTF8.GetBytes(IVKey);
 
             using var encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
 
@@ -28,7 +28,15 @@ namespace PizzaApp.Server.Helpers
                         //Write all data to the stream.
                         swEncrypt.Write(text);
                     }
-                    result = msEncrypt.ToArray();
+
+                    var decryptedContent = msEncrypt.ToArray();
+
+                    result = new byte[aesAlg.IV.Length + decryptedContent.Length];
+
+                    Buffer.BlockCopy(aesAlg.IV, 0, result, 0, aesAlg.IV.Length);
+                    Buffer.BlockCopy(decryptedContent, 0, result, aesAlg.IV.Length, decryptedContent.Length);
+
+                    //result = msEncrypt.ToArray();
                 }
             }
 
@@ -38,17 +46,24 @@ namespace PizzaApp.Server.Helpers
         public static string DecryptString(string encrypted)
         {
             string response = "";
-            var encryptedBytes = Encoding.UTF8.GetBytes(encrypted);
+
             using (var aesAlg = Aes.Create())
             {
                 aesAlg.Key = Encoding.UTF8.GetBytes(Key);
-                aesAlg.IV = Encoding.UTF8.GetBytes(IVKey);
+                //aesAlg.IV = Encoding.UTF8.GetBytes(IVKey);
+
+                var iv = new byte[16];
+                var cipher = new byte[16];
+                var fullCipher = Convert.FromBase64String(encrypted);
+
+                Buffer.BlockCopy(fullCipher, 0, iv, 0, iv.Length);
+                Buffer.BlockCopy(fullCipher, iv.Length, cipher, 0, iv.Length);
 
                 // Create a decryptor to perform the stream transform.
-                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+                using var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, iv);
 
                 // Create the streams used for decryption.
-                using (MemoryStream msDecrypt = new MemoryStream(encryptedBytes))
+                using (MemoryStream msDecrypt = new MemoryStream(cipher))
                 {
                     using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                     {

@@ -16,6 +16,9 @@ namespace PizzaApp.Server.Helpers
             {
                 response.IsValid = true;
                 response.ResponseMessage = EncryptionHelper.EncryptString($"{userID};{DateTime.Today.AddHours(24)}");
+
+                var test = EncryptionHelper.DecryptString(response.ResponseMessage);
+
             }
             catch(Exception e)
             {

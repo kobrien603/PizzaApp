@@ -33,17 +33,22 @@ namespace PizzaApp.Components
 
         private async Task ManageSession()
         {
-            //string token = await CookieService.GetCookie("pizza_app_session");
-            //if (!string.IsNullOrEmpty(token))
-            //{
-            //    // fetch and fill
-            //}
+            string token = await CookieService.GetCookie("pizza_app_session");
+            if (!string.IsNullOrEmpty(token))
+            {
+                // fetch and fill
+                await FetchUser();
+            }
         }
 
-        private async Task FetchUser(string token)
+        private async Task FetchUser()
         {
-            //var request = await Http.GetStringAsync("api/users/");
-            //var response = await request.Content.ReadFromJsonAsync<ValidResponse>();
+            var request = await Http.GetAsync("api/users/get-user");
+            var response = await request.Content.ReadFromJsonAsync<ValidResponse<AuthUser>>();
+            if (response.IsValid)
+            {
+                User = response.Data;
+            }
         }
     }
 }
