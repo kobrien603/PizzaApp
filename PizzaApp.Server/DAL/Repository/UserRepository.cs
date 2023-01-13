@@ -14,10 +14,8 @@ namespace PizzaApp.Server.DAL.Repository
 
         public UserRepository(PizzaContext context) => _DAL = context;
 
-        public async Task<bool> InsertOrUpdate(User user)
+        public async Task InsertOrUpdate(User user)
         {
-            bool success;
-
             try
             {
                 if (user.ID == 0)
@@ -30,16 +28,11 @@ namespace PizzaApp.Server.DAL.Repository
                 }
 
                 await _DAL.SaveChangesAsync();
-
-                success = true;
             }
             catch(Exception e)
             {
                 // todo - log message
-                success = false;
             }
-
-            return success;
         }
 
         public async Task<bool> EmailAlreadyRegistered(string email)

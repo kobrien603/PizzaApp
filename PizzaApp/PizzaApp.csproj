@@ -19,6 +19,4 @@
     <ProjectReference Include="..\PizzaApp.Shared\PizzaApp.Shared.csproj" />
   </ItemGroup>
 
-
-
 </Project>

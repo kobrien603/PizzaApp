@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using PizzaApp.Models;
+using PizzaApp.Services;
 using PizzaApp.Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ namespace PizzaApp.Components
     public partial class LoginForm
     {
         [Inject] HttpClient Http { get; set; }
-        [Inject] NavigationManager Navigation { get; set; }
+        [Inject] CookieService CookieService { get; set; }
+        [Inject] NavigationManager NavigationManager { get; set; }
         [CascadingParameter] ISnackbar Snackbar { get; set; }
 
         bool BtnLogin { get; set; }
@@ -44,6 +46,12 @@ namespace PizzaApp.Components
                 response.ResponseMessage,
                 response.IsValid ? Severity.Success : Severity.Error
             );
+
+            if (response.IsValid)
+            {
+                await CookieService.SetCookie("pizza_app_session", response.ResponseMessage, 7);
+                NavigationManager.NavigateTo("/");
+            }
 
             await Task.Delay(1000);
 

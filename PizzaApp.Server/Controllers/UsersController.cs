@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MudBlazor.Extensions;
 using PizzaApp.Models;
+using PizzaApp.Server.Attributes;
 using PizzaApp.Server.DAL;
 using PizzaApp.Server.DAL.Models;
 using PizzaApp.Server.Helpers;
@@ -13,7 +14,7 @@ namespace PizzaApp.Server.Controllers
 	[Route("api/[controller]")]
 	[ApiController]
 	public class UsersController : ControllerBase
-	{
+    {
 		private readonly PizzaContext _context;
 
 		public UsersController(PizzaContext context)
@@ -33,6 +34,12 @@ namespace PizzaApp.Server.Controllers
 		public string Get(int id)
 		{
 			return "value";
+		}
+
+		[HttpGet("get-user")]
+		public async Task<ValidResponse<AuthUser>> GetAuthUser()
+		{
+			return new ValidResponse<AuthUser>();
 		}
 
 		/// <summary>
