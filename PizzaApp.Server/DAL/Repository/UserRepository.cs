@@ -43,12 +43,18 @@ namespace PizzaApp.Server.DAL.Repository
 
         public async Task<User?> GetUserByEmail(string email)
         {
-            return await _DAL.Users.Where(p => p.Email == email).FirstOrDefaultAsync();
+            return await _DAL.Users.AsNoTracking()
+                .Include(p => p.Role)
+                .Where(p => p.Email == email)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<User?> GetUserByID(int id)
         {
-            return await _DAL.Users.Where(p => p.ID == id).FirstOrDefaultAsync();
+            return await _DAL.Users.AsNoTracking()
+                .Include(p => p.Role)
+                .Where(p => p.ID == id)
+                .FirstOrDefaultAsync();
         }
     }
 }

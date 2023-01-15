@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using PizzaApp.Models;
 using PizzaApp.Server.DAL;
 using PizzaApp.Server.DAL.Models;
+using PizzaApp.Server.Enums;
 using PizzaApp.Server.Helpers;
 using PizzaApp.Server.Models;
 using PizzaApp.Server.Services;
@@ -41,8 +42,8 @@ namespace PizzaApp.Server.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost("create-user")]
-        public async Task<ValidResponse> CreateUser([FromBody] CreateUserModel model)
+        [HttpPost("register")]
+        public async Task<ValidResponse> Register([FromBody] CreateUserModel model)
         {
             ValidResponse response = new();
 
@@ -59,6 +60,8 @@ namespace PizzaApp.Server.Controllers
                 }
                 else
                 {
+                    var defaultRole = await repository.Roles.GetRoleByName(UserRoles.User.ToString());
+
                     // create user
                     var dbUser = new User()
                     {
@@ -71,7 +74,8 @@ namespace PizzaApp.Server.Controllers
                         ModifiedDate = DateTime.Now,
                         Password = PasswordHelper.CreateHashPassword(model.Password),
                         PhoneNumber = model.PhoneNumber,
-                        ProfilePicture = model.ProfilePicture
+                        ProfilePicture = model.ProfilePicture,
+                        Role = defaultRole
                     };
 
                     await repository.Users.InsertOrUpdate(dbUser);

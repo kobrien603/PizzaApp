@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PizzaApp.Components
 {
-    public partial class CreateForm
+    public partial class RegisterForm
     {
 		[Inject] HttpClient Http { get; set; }
         [Inject] CookieService CookieService { get; set; }
@@ -65,7 +65,7 @@ namespace PizzaApp.Components
         {
             BtnCreateAccount = true;
 
-			var request = await Http.PostAsJsonAsync("api/auth/create-user", NewUser);
+			var request = await Http.PostAsJsonAsync("api/auth/register", NewUser);
             var response = await request.Content.ReadFromJsonAsync<ValidResponse>();
             
             Snackbar.Add(
