@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaApp.Web", "PizzaApp.We
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaApp.MAUI", "PizzaApp.MAUI\PizzaApp.MAUI.csproj", "{C85AA657-B0C7-414C-B001-FC5145289D62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaApp.Shared", "PizzaApp.Shared\PizzaApp.Shared.csproj", "{054A8357-A36C-4C26-9FB5-2F713C2D4943}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaApp.Shared", "PizzaApp.Shared\PizzaApp.Shared.csproj", "{054A8357-A36C-4C26-9FB5-2F713C2D4943}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

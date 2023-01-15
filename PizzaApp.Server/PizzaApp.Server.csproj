@@ -38,4 +38,9 @@
     <ProjectReference Include="..\PizzaApp.Web\PizzaApp.Web.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Middleware\" />
+    <Folder Include="Pages\" />
+  </ItemGroup>
+
 </Project>

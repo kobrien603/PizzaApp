@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PizzaApp.Shared.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,25 @@ namespace PizzaApp.Server.Helpers
 {
     public class CookieHelper
     {
-        //public bool ManageLoginCookie()
-        //{
+        public ValidResponse CreateCookie(int userID)
+        {
+            ValidResponse response = new();
+            try
+            {
+                response.IsValid = true;
+                response.ResponseMessage = EncryptionHelper.EncryptString($"{userID};{DateTime.Today.AddHours(24)}");
 
-        //}
+                var test = EncryptionHelper.DecryptString(response.ResponseMessage);
+
+            }
+            catch(Exception e)
+            {
+                // todo - log
+                response.IsValid = false;
+                response.ResponseMessage = "Error generating cookies";
+            }
+
+            return response;
+        }
     }
 }

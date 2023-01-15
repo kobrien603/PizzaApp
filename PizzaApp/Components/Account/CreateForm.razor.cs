@@ -1,18 +1,23 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using PizzaApp.Models;
+using PizzaApp.Services;
+using PizzaApp.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaApp.Pages.Account
+namespace PizzaApp.Components
 {
-    public partial class Create
+    public partial class CreateForm
     {
+		[Inject] HttpClient Http { get; set; }
+        [Inject] CookieService CookieService { get; set; }
+        [Inject] NavigationManager NavigationManager { get; set; }
         [CascadingParameter] ISnackbar Snackbar { get; set; }
-        //[Inject] IDbContextFactory<PizzaContext> PizzaContext { get; set; }
 
         CreateUserModel NewUser { get; set; } = new();
         bool BtnCreateAccount { get; set; }
@@ -54,46 +59,23 @@ namespace PizzaApp.Pages.Account
             StateHasChanged();
         }
 
-        private async Task CreateAccount()
+        private async Task CreateAccountAsync()
         {
             BtnCreateAccount = true;
 
-            //using var context = PizzaContext.CreateDbContext();
-            //using var repository = new PizzaRepository(context);
+			var request = await Http.PostAsJsonAsync("api/users/create-user", NewUser);
+            var response = await request.Content.ReadFromJsonAsync<ValidResponse>();
+            
+            Snackbar.Add(
+                response.ResponseMessage, 
+                response.IsValid ? Severity.Success : Severity.Error
+            );
 
-            //// check if email is already in use
-            //if (repository.Users.EmailAlreadyRegistered(NewUser.Email))
-            //{
-            //    Snackbar.Add("Email has already been registered. Please try again", Severity.Error);
-            //}
-            //else
-            //{
-
-            //    User dbUser = new()
-            //    {
-            //        ID = 0, // always 0 to generate new id in db
-            //        Password = PasswordHelper.CreateHashPassword(NewUser.Password),
-            //        CreatedDate = DateTime.Now,
-            //        DateOfBirth = NewUser.DateOfBirth,
-            //        Email = NewUser.Email,
-            //        FirstName = NewUser.FirstName,
-            //        LastName = NewUser.LastName,
-            //        ModifiedDate = DateTime.Now,
-            //        PhoneNumber = NewUser.PhoneNumber,
-            //        ProfilePicture = NewUser.ProfilePicture,
-            //    };
-
-            //    var response = repository.Users.InsertOrUpdate(dbUser);
-
-            //    if (response)
-            //    {
-            //        // navigate
-            //    }
-            //    else
-            //    {
-            //        // error
-            //    }
-            //}
+            if (response.IsValid)
+            {
+                await CookieService.SetCookie("pizza_app_session", response.ResponseMessage, 7);
+                NavigationManager.NavigateTo("/");
+            }
 
             await Task.Delay(1000);
 

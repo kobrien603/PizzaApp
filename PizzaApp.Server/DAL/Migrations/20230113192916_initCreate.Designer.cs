@@ -11,8 +11,8 @@ using PizzaApp.Server.DAL;
 namespace PizzaApp.Server.DAL.Migrations
 {
     [DbContext(typeof(PizzaContext))]
-    [Migration("20221127190817_AddCompanyTable")]
-    partial class AddCompanyTable
+    [Migration("20230113192916_initCreate")]
+    partial class initCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,25 @@ namespace PizzaApp.Server.DAL.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("PizzaApp.Server.DAL.Models.Category", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("categories", (string)null);
+                });
 
             modelBuilder.Entity("PizzaApp.Server.DAL.Models.Company", b =>
                 {
@@ -78,6 +97,37 @@ namespace PizzaApp.Server.DAL.Migrations
                     b.ToTable("company", (string)null);
                 });
 
+            modelBuilder.Entity("PizzaApp.Server.DAL.Models.Item", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CategoryID")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CategoryID");
+
+                    b.ToTable("items", (string)null);
+                });
+
             modelBuilder.Entity("PizzaApp.Server.DAL.Models.User", b =>
                 {
                     b.Property<int>("ID")
@@ -87,7 +137,10 @@ namespace PizzaApp.Server.DAL.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime?>("DateOfBirth")
+                    b.Property<DateOnly?>("DateOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
@@ -97,6 +150,9 @@ namespace PizzaApp.Server.DAL.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -120,6 +176,18 @@ namespace PizzaApp.Server.DAL.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("users", (string)null);
+                });
+
+            modelBuilder.Entity("PizzaApp.Server.DAL.Models.Item", b =>
+                {
+                    b.HasOne("PizzaApp.Server.DAL.Models.Category", null)
+                        .WithMany("Items")
+                        .HasForeignKey("CategoryID");
+                });
+
+            modelBuilder.Entity("PizzaApp.Server.DAL.Models.Category", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }
