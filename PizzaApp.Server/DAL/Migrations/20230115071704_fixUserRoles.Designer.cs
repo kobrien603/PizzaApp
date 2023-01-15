@@ -11,14 +11,14 @@ using PizzaApp.Server.DAL;
 namespace PizzaApp.Server.DAL.Migrations
 {
     [DbContext(typeof(PizzaContext))]
-    [Migration("20230113194115_createStandardDatabaseNaming")]
-    partial class createStandardDatabaseNaming
+    [Migration("20230115071704_fixUserRoles")]
+    partial class fixUserRoles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.11")
+                .HasAnnotation("ProductVersion", "6.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("PizzaApp.Server.DAL.Models.Category", b =>
@@ -147,6 +147,47 @@ namespace PizzaApp.Server.DAL.Migrations
                     b.HasIndex("CategoryID");
 
                     b.ToTable("items", (string)null);
+                });
+
+            modelBuilder.Entity("PizzaApp.Server.DAL.Models.Role", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("name");
+
+                    b.Property<int>("UserRole")
+                        .HasColumnType("int")
+                        .HasColumnName("user_role");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Name = "User",
+                            UserRole = 0
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Name = "Admin",
+                            UserRole = 1
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Name = "SuperAdmin",
+                            UserRole = 2
+                        });
                 });
 
             modelBuilder.Entity("PizzaApp.Server.DAL.Models.User", b =>

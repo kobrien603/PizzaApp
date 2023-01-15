@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PizzaApp.Server.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -27,6 +28,9 @@ namespace PizzaApp.Server.DAL.Models
 
         [Column("password")]
         public string Password { get; set; } = string.Empty;
+
+        //[Column("role")]
+        //public ICollection<Role> Role { get; set; } = new HashSet<Role>();
 
         [Column("profile_picture")]
         public string ProfilePicture { get; set; } = string.Empty;

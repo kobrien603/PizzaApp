@@ -33,12 +33,12 @@ namespace PizzaApp.Components
 
         private async Task ManageSession()
         {
-            string token = await CookieService.GetCookie("pizza_app_session");
-            if (!string.IsNullOrEmpty(token))
-            {
-                // fetch and fill
-                await FetchUser();
-            }
+            //string token = await CookieService.GetCookie("pizza_app_session");
+            //if (!string.IsNullOrEmpty(token))
+            //{
+            //    // fetch and fill
+            //    await FetchUser();
+            //}
         }
 
         private async Task FetchUser()
