@@ -245,7 +245,13 @@ namespace PizzaApp.Server.DAL.Migrations
                         .HasColumnType("longtext")
                         .HasColumnName("profile_picture");
 
+                    b.Property<int>("RoleID")
+                        .HasColumnType("int")
+                        .HasColumnName("role_id");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("RoleID");
 
                     b.ToTable("users", (string)null);
                 });
@@ -257,9 +263,25 @@ namespace PizzaApp.Server.DAL.Migrations
                         .HasForeignKey("CategoryID");
                 });
 
+            modelBuilder.Entity("PizzaApp.Server.DAL.Models.User", b =>
+                {
+                    b.HasOne("PizzaApp.Server.DAL.Models.Role", "Role")
+                        .WithMany("User")
+                        .HasForeignKey("RoleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("PizzaApp.Server.DAL.Models.Category", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("PizzaApp.Server.DAL.Models.Role", b =>
+                {
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

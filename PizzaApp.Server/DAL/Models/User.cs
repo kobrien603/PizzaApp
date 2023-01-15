@@ -29,8 +29,8 @@ namespace PizzaApp.Server.DAL.Models
         [Column("password")]
         public string Password { get; set; } = string.Empty;
 
-        //[Column("role")]
-        //public ICollection<Role> Role { get; set; } = new HashSet<Role>();
+        [Column("role_id")]
+        public int RoleID { get; set; }
 
         [Column("profile_picture")]
         public string ProfilePicture { get; set; } = string.Empty;
@@ -52,5 +52,7 @@ namespace PizzaApp.Server.DAL.Models
 
         [Column("deleted_date")]
         public DateTime? DeletedDate { get; set; }
+
+        public virtual Role Role { get; set; } = new();
     }
 }

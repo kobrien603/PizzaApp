@@ -26,8 +26,9 @@ namespace PizzaApp.Server.DAL
         {
             modelBuilder.Entity<User>().ToTable("users")
                 .HasQueryFilter(x => !x.IsDeleted)
-                .HasMany(u => u.Role)
-                .WithMany(r => r.User);
+                .HasOne(u => u.Role)
+                .WithMany(r => r.User)
+                .HasForeignKey(u => u.RoleID);
 			modelBuilder.Entity<Company>().ToTable("company");
             modelBuilder.Entity<Category>().ToTable("categories");
             modelBuilder.Entity<Item>().ToTable("items");
