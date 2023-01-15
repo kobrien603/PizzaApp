@@ -1,7 +1,17 @@
 ﻿@page "/about"
+@attribute [Authorize]
 
 <MudContainer MaxWidth="MaxWidth.Medium">
     <MudPaper Elevation="3" Class="pa-1 my-3 rounded-md">
         About Us
+
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+                <span>You're authorized as @context.User.Identity.Name</span>
+            </Authorized>
+            <NotAuthorized>
+                <span>You're not authorized, buddy.</span>
+            </NotAuthorized>
+        </AuthorizeView>
     </MudPaper>
 </MudContainer>

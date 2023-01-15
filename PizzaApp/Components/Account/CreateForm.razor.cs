@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
 using PizzaApp.Models;
 using PizzaApp.Services;
@@ -17,6 +18,7 @@ namespace PizzaApp.Components
 		[Inject] HttpClient Http { get; set; }
         [Inject] CookieService CookieService { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
+        [Inject] AuthenticationStateProvider AuthStateProvider { get; set; }
         [CascadingParameter] ISnackbar Snackbar { get; set; }
 
         CreateUserModel NewUser { get; set; } = new();
@@ -63,7 +65,7 @@ namespace PizzaApp.Components
         {
             BtnCreateAccount = true;
 
-			var request = await Http.PostAsJsonAsync("api/users/create-user", NewUser);
+			var request = await Http.PostAsJsonAsync("api/auth/create-user", NewUser);
             var response = await request.Content.ReadFromJsonAsync<ValidResponse>();
             
             Snackbar.Add(
@@ -74,6 +76,8 @@ namespace PizzaApp.Components
             if (response.IsValid)
             {
                 await CookieService.SetCookie("pizza_app_session", response.ResponseMessage, 7);
+                await AuthStateProvider.GetAuthenticationStateAsync();
+
                 NavigationManager.NavigateTo("/");
             }
 

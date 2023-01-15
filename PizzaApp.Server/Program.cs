@@ -1,60 +1,25 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using PizzaApp.Server.DAL;
-using PizzaApp.Server.Models;
-using PizzaApp.Shared.Models;
+using PizzaApp.Server.Extensions;
+using PizzaApp.Server.Middleware;
+using PizzaApp.Server.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// add database
-string connectionString = builder.Configuration.GetConnectionString("PizzaConnection");
-builder.Services.AddDbContextFactory<PizzaContext>(options =>
-{
-	options.UseMySql(
-		connectionString,
-		ServerVersion.AutoDetect(connectionString),
-		x => x.MigrationsAssembly("PizzaApp.Server")
-	);
-});
+builder.Services.AddResponseCaching();
 
-builder.Services.AddDbContext<PizzaContext>(options =>
-{
-	options.UseMySql(
-		connectionString,
-		ServerVersion.AutoDetect(connectionString),
-		x => x.MigrationsAssembly("PizzaApp.Server")
-	);
-});
+builder.Services.AddAuthentication();
+builder.Services.ConfigureMySQLDatabase(builder.Configuration);
+builder.Services.ConfigureJWT(builder.Configuration);
 
-builder.Services.AddEntityFrameworkMySql();
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-// add auth
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(options =>
-//    {
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuer = true,
-//            ValidateAudience = true,
-//            ValidateLifetime = true,
-//            ValidateIssuerSigningKey = true,
-//            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-//            ValidAudience = builder.Configuration["Jwt:Audience"],
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-//        };
-//    });
-
+builder.Services.AddScoped<CustomAuthMiddleware>();
+builder.Services.AddScoped<AuthUserService>();
+builder.Services.AddHttpContextAccessor();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddSwaggerGen();
+//builder.Services.ConfigureSwagger();
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
@@ -62,8 +27,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-	app.UseSwagger();
-    app.UseSwaggerUI();
+	//app.UseSwagger(); // turn off so you don't go directly to api doc
+    //app.UseSwaggerUI();
 
     app.UseMigrationsEndPoint();
     app.UseWebAssemblyDebugging();
@@ -74,6 +39,9 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+// middleware
+app.UseMiddleware<CustomAuthMiddleware>();
 
 app.UseHttpsRedirection();
 
