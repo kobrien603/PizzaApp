@@ -31,7 +31,7 @@ namespace PizzaApp.Server.Controllers
             _context = context;
         }
 
-        [HttpGet, Authorize]
+        [HttpGet("test"), Authorize]
         public ActionResult<string> GetUsername()
         {
             return Ok(_authUserService.Username());
@@ -115,7 +115,7 @@ namespace PizzaApp.Server.Controllers
                 if (dbUser != null && PasswordHelper.ValidatePassword(model.Password, dbUser.Password))
                 {
                     response.IsValid = true;
-                    response.ResponseMessage = CreateToken(dbUser);
+                    response.ResponseMessage = CreateToken(dbUser, model.RememberMe);
                 }
                 else
                 {
@@ -140,24 +140,34 @@ namespace PizzaApp.Server.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        private string CreateToken(User user)
+        private string CreateToken(User user, bool rememberMe = false)
         {
+            // build claims
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, user.Email),
-                new Claim(ClaimTypes.Role, "Admin")
+                new Claim(ClaimTypes.Name, user.FirstName),
+                new Claim(ClaimTypes.Role, user.Role.Name),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.NameIdentifier, user.ID.ToString()),
             };
 
+            // fetch jwt auth key
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
-                _configuration.GetSection("JwtConfig:secret").Value));
+                _configuration.GetSection("Jwt:key").Value));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
+            // set expired date based on user selecting rememberMe or not
+            var expireDate = rememberMe ? DateTime.Now.AddDays(30) : DateTime.Now.AddDays(14);
+
+            // create token obj
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddDays(1),
-                signingCredentials: creds);
+                expires: expireDate,
+                signingCredentials: creds
+            );
 
+            // create token
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor;
 using MudBlazor.Services;
+using PizzaApp.Provider;
 using PizzaApp.Services;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PizzaApp
-{ 
+{
     public static class Startup
     {
         /// <summary>
@@ -35,11 +36,12 @@ namespace PizzaApp
                 config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
             });
 
+            builder.Services.AddTransient<APIService>();
             builder.Services.AddTransient<CookieService>();
 
-            builder.Services.AddBlazoredLocalStorage();
-
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            
+            // custom auth state provider
             builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
             builder.Services.AddAuthorizationCore();
         }

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.EntityFrameworkCore;
 using NuGet.Common;
 using PizzaApp.Server.DAL;
 using PizzaApp.Server.Services;
@@ -17,8 +19,38 @@ namespace PizzaApp.Server.Middleware
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// add user to context on server side when data is found
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="next"></param>
+        /// <returns></returns>
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
+            var routeData = context.GetRouteData();
+            var actionDescriptor = routeData.Values["action"] as ActionDescriptor;
+            if (actionDescriptor != null)
+            {
+                var authorizeData = actionDescriptor.EndpointMetadata.OfType<IAuthorizeData>().FirstOrDefault();
+                if (authorizeData != null)
+                {
+                    var isAuthenticated = await CheckAuthentication(context, authorizeData);
+                    if (isAuthenticated)
+                    {
+                        await next(context);
+                    }
+                    else
+                    {
+                        context.Response.StatusCode = 401;
+                        return;
+                    }
+                }
+                else
+                {
+                    await next(context);
+                }
+            }
+
             var authHeader = context.Request.Headers["Authorization"];
             if (authHeader.Count > 0)
             {
@@ -29,7 +61,7 @@ namespace PizzaApp.Server.Middleware
                     
                     context.User = new ClaimsPrincipal(
                         new ClaimsIdentity(
-                            jwt.Claims, "custom"
+                            jwt.Claims, "jwt"
                         )
                     );
                 }
@@ -62,6 +94,12 @@ namespace PizzaApp.Server.Middleware
             //}
 
             await next(context);
+        }
+
+        private async Task<bool> CheckAuthentication(HttpContext context, IAuthorizeData authorizeData)
+        {
+            //Your code to check the authentication of the user based on the authorizeData.
+            return true;
         }
     }
 }

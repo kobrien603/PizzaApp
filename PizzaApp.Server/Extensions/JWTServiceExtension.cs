@@ -15,7 +15,6 @@ namespace PizzaApp.Server.Extensions
         /// <param name="configuration"></param>
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
         {
-            var jwtConfig = configuration.GetSection("jwtConfig");
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -29,9 +28,23 @@ namespace PizzaApp.Server.Extensions
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtConfig["validIssuer"],
-                    ValidAudience = jwtConfig["validAudience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig["secret"]))
+                    ValidIssuer = configuration["Jwt:issuer"],
+                    ValidAudience = configuration["Jwt:audiance"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:key"])),
+                    ClockSkew = TimeSpan.FromMinutes(5),
+                };
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = context =>
+                    {
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        {
+                            context.Response.Headers.Add("Token-Expired", "true");
+                        }
+                        return Task.CompletedTask;
+                    }
                 };
             });
         }

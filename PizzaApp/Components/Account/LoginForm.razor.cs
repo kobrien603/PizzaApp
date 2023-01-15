@@ -13,7 +13,7 @@ namespace PizzaApp.Components
 {
     public partial class LoginForm
     {
-        [Inject] HttpClient Http { get; set; }
+        [Inject] APIService APIService { get; set; }
         [Inject] CookieService CookieService { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
         [Inject] AuthenticationStateProvider AuthStateProvider { get; set; }
@@ -41,7 +41,7 @@ namespace PizzaApp.Components
         {
             BtnLogin = true;
 
-            var request = await Http.PostAsJsonAsync("api/auth/login", Model);
+            var request = await APIService.Post("api/auth/login", Model);
             var response = await request.Content.ReadFromJsonAsync<ValidResponse>();
 
             Snackbar.Add(
@@ -56,6 +56,23 @@ namespace PizzaApp.Components
 
                 NavigationManager.NavigateTo("/");
             }
+
+            await Task.Delay(1000);
+
+            BtnLogin = false;
+            StateHasChanged();
+        }
+
+        public async void Test()
+        {
+            BtnLogin = true;
+
+            var request = await APIService.Get<string>("api/auth/test");
+
+            Snackbar.Add(
+                request,
+                Severity.Error
+            );
 
             await Task.Delay(1000);
 

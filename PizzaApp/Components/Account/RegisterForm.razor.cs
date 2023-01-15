@@ -15,7 +15,7 @@ namespace PizzaApp.Components
 {
     public partial class RegisterForm
     {
-		[Inject] HttpClient Http { get; set; }
+		[Inject] APIService APIService { get; set; }
         [Inject] CookieService CookieService { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
         [Inject] AuthenticationStateProvider AuthStateProvider { get; set; }
@@ -65,7 +65,7 @@ namespace PizzaApp.Components
         {
             BtnCreateAccount = true;
 
-			var request = await Http.PostAsJsonAsync("api/auth/register", NewUser);
+			var request = await APIService.Post("api/auth/register", NewUser);
             var response = await request.Content.ReadFromJsonAsync<ValidResponse>();
             
             Snackbar.Add(
