@@ -67,11 +67,11 @@ namespace PizzaApp.Components
         {
             BtnLogin = true;
 
-            var request = await APIService.Get<string>("api/auth/test");
+            var response = await APIService.Get<ValidResponse>("api/auth/test");
 
             Snackbar.Add(
-                request,
-                Severity.Error
+                response.ResponseMessage,
+               Severity.Error
             );
 
             await Task.Delay(1000);

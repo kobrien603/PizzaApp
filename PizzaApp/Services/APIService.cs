@@ -25,15 +25,19 @@ namespace PizzaApp.Services
             {
                 var response = await _httpClient.GetAsync(url);
                 var statusCode = response.EnsureSuccessStatusCode();
-                
-                if (typeof(T) == typeof(string))
+
+                if (typeof(T).IsClass || typeof(T).IsValueType)
                 {
-                    return (T)(object)await response.Content.ReadAsStringAsync();
+                    var result = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<T>(result, new JsonSerializerOptions()
+                    {
+                        AllowTrailingCommas = true,
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    });
                 }
                 else
                 {
-                    var result = await response.Content.ReadAsStringAsync();
-                    return JsonSerializer.Deserialize<T>(result);
+                    return (T)(object)await response.Content.ReadAsStringAsync();
                 }
             }
             catch (HttpRequestException ex)

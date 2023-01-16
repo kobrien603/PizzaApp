@@ -32,9 +32,13 @@ namespace PizzaApp.Server.Controllers
         }
 
         [HttpGet("test"), Authorize]
-        public ActionResult<string> GetUsername()
+        public ValidResponse GetUsername()
         {
-            return Ok(_authUserService.Username());
+            return new ValidResponse()
+            {
+                IsValid = true,
+                ResponseMessage = _authUserService.Username()
+            };
         }
 
         /// <summary>
