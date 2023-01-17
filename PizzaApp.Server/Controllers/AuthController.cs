@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using PizzaApp.Models;
 using PizzaApp.Server.DAL;
 using PizzaApp.Server.DAL.Models;
 using PizzaApp.Server.Enums;

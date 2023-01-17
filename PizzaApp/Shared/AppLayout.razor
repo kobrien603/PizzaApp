@@ -1,16 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @namespace PizzaApp
 
-
-@*@if(NavigationManager.Uri.ToLower().StartsWith("/admin"))
-{
-    <AdminLayout Body="@Body" />
-} 
-else
-{
-    <AppLayout Body="@Body" />
-}*@
-
 <PageTitle>Pizza App</PageTitle>
 
 <MudLayout>
