@@ -7,7 +7,6 @@ using PizzaApp.Server.DAL;
 using PizzaApp.Server.DAL.Models;
 using PizzaApp.Server.Enums;
 using PizzaApp.Server.Helpers;
-using PizzaApp.Server.Models;
 using PizzaApp.Server.Services;
 using PizzaApp.Shared.Models;
 using System.IdentityModel.Tokens.Jwt;

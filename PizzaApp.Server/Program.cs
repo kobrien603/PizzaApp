@@ -19,7 +19,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-//builder.Services.ConfigureSwagger();
+builder.Services.ConfigureSwagger();
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
@@ -27,8 +27,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-	//app.UseSwagger(); // turn off so you don't go directly to api doc
-    //app.UseSwaggerUI();
+    app.UseSwagger(); // turn off so you don't go directly to api doc
+    app.UseSwaggerUI();
 
     app.UseMigrationsEndPoint();
     app.UseWebAssemblyDebugging();

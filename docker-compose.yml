@@ -40,3 +40,7 @@ services:
     build:
       context: .
       dockerfile: PizzaApp.Server/Dockerfile
+    ports:
+      - "80:443"
+    expose:
+      - "80:443"

@@ -21,9 +21,11 @@ namespace PizzaApp.MAUI
 #endif
 
 			// add DI from PizzaApp
-			//builder.InjectPizzaApp();
+			builder.Services.InjectPizzaApp();
 
-			return builder.Build();
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7091/") });
+
+            return builder.Build();
         }
     }
 }

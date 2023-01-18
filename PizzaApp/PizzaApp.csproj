@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Admin\CreateSomething.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.13" />
@@ -25,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Pages\Admin\CreateSomething.razor" />
+    <None Include="Pages\CRM\Create.razor" />
   </ItemGroup>
 
 </Project>
