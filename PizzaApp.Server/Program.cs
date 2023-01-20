@@ -24,14 +24,20 @@ builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
+app.UseSwagger(); // turn off so you don't go directly to api doc
+app.UseSwaggerUI();
+
+app.UseMigrationsEndPoint();
+app.UseWebAssemblyDebugging();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(); // turn off so you don't go directly to api doc
-    app.UseSwaggerUI();
+    //app.UseSwagger(); // turn off so you don't go directly to api doc
+    //app.UseSwaggerUI();
 
-    app.UseMigrationsEndPoint();
-    app.UseWebAssemblyDebugging();
+    //app.UseMigrationsEndPoint();
+    //app.UseWebAssemblyDebugging();
 }
 else
 {

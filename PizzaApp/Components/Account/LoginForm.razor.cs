@@ -66,7 +66,7 @@ namespace PizzaApp.Components
         {
             BtnLogin = true;
 
-            var response = await APIService.Get<ValidResponse>("api/auth/test");
+            var response = await APIService.Get<ValidResponse>("http://localhost:80/api/auth/test");
 
             Snackbar.Add(
                 response.ResponseMessage,
