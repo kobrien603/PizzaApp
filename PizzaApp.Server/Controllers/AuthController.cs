@@ -29,7 +29,7 @@ namespace PizzaApp.Server.Controllers
             _context = context;
         }
 
-        [HttpGet("test"), Authorize]
+        [HttpGet("test")]
         public ValidResponse GetUsername()
         {
             return new ValidResponse()

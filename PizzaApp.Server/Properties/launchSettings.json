@@ -23,10 +23,17 @@
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "launchUrl": "",
+      //"launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
       //"inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
       "publishAllPorts": true,
-      "useSSL": true
+      "useSSL": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sslPort": 50001,
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7091;http://localhost:5259"
     }
   },
   "iisSettings": {

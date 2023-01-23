@@ -23,7 +23,7 @@ namespace PizzaApp.MAUI
 			// add DI from PizzaApp
 			builder.Services.InjectPizzaApp();
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:80/") });
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:443/") });
 
             return builder.Build();
         }
