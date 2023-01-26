@@ -18,8 +18,8 @@ namespace PizzaApp.Server.Extensions
             {
                 options.UseMySql(
                     connectionString,
-                    ServerVersion.AutoDetect(connectionString),
-                    x => x.MigrationsAssembly("PizzaApp.Server")
+                    ServerVersion.AutoDetect(connectionString)
+                    //x => x.MigrationsAssembly("PizzaApp.Server")
                 );
             });
 
@@ -27,8 +27,8 @@ namespace PizzaApp.Server.Extensions
             {
                 options.UseMySql(
                     connectionString,
-                    ServerVersion.AutoDetect(connectionString),
-                    x => x.MigrationsAssembly("PizzaApp.Server")
+                    ServerVersion.AutoDetect(connectionString)
+                    //x => x.MigrationsAssembly("PizzaApp.Server")
                 );
             });
 

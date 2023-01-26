@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaApp.Models
+namespace PizzaApp.Shared.Models
 {
     public class LoginModel
     {

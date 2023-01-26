@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
-using PizzaApp.Models;
-using PizzaApp.Services;
 using PizzaApp.Shared.Models;
+using PizzaApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,7 +66,7 @@ namespace PizzaApp.Components
         {
             BtnLogin = true;
 
-            var response = await APIService.Get<ValidResponse>("api/auth/test");
+            var response = await APIService.Get<ValidResponse>("/api/auth/test");
 
             Snackbar.Add(
                 response.ResponseMessage,

@@ -20,4 +20,8 @@
     <ProjectReference Include="..\PizzaApp.Shared\PizzaApp.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Pages\CRM\Create.razor" />
+  </ItemGroup>
+
 </Project>

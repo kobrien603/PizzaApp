@@ -1,0 +1,46 @@
+﻿@namespace PizzaApp.Components
+@typeparam TItem
+@using System.ComponentModel.DataAnnotations;
+
+<h3>Create</h3>
+<EditForm Model="Model">
+    <DataAnnotationsValidator />
+    @foreach (var property in typeof(TItem).GetProperties())
+    {
+        <div>
+            <label for="@property.Name">@property.Name:</label>
+            @if (property.PropertyType == typeof(string))
+            {
+                string value = Model?.GetType()?.GetProperty(nameof(property.Name))?.GetValue(Model)?.ToString() ?? "";
+                <InputText id="@property.Name" @bind-Value="value" />
+            }
+            @*else if (property.PropertyType == typeof(int))
+            {
+                <InputNumber id="@property.Name" @bind-Value="@Convert.ToInt32(Model.GetType().GetProperty(nameof(property.Name)).GetValue(Model))" />
+            }
+            @foreach (var attribute in property.GetCustomAttributes(true))
+            {
+                if (attribute is RequiredAttribute)
+                {
+                    <ValidationMessage For="@(() => Model.GetType().GetProperty(nameof(property.Name)).GetValue(Model))" />
+                }
+                else if (attribute is RangeAttribute)
+                {
+                    <ValidationMessage For="@(() => Model.GetType().GetProperty(nameof(property.Name)).GetValue(Model))" />
+                }
+                //other validation attributes
+            }*@
+        </div>
+    }
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public TItem Model { get; set; }
+
+    private void HandleSubmit()
+    {
+        // Save the model to the database
+    }
+}

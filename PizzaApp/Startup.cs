@@ -21,10 +21,10 @@ namespace PizzaApp
         /// used to help inject DI projects from PizzaApp to any web or app tool that connects to it
         /// ex: in PizzaApp.Web we add builder.Services.TryAddPizzaAppRCL();
         /// </summary>
-        public static void InjectPizzaApp(this WebAssemblyHostBuilder builder)
+        public static void InjectPizzaApp(this IServiceCollection services)
         {
             // add mudblazor
-            builder.Services.AddMudServices(config =>
+            services.AddMudServices(config =>
             {
                 config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;
                 config.SnackbarConfiguration.PreventDuplicates = false;
@@ -36,14 +36,12 @@ namespace PizzaApp
                 config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
             });
 
-            builder.Services.AddTransient<APIService>();
-            builder.Services.AddTransient<CookieService>();
-
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            services.AddTransient<APIService>();
+            services.AddTransient<CookieService>();
             
             // custom auth state provider
-            builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
-            builder.Services.AddAuthorizationCore();
+            services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+            services.AddAuthorizationCore();
         }
     }
 }

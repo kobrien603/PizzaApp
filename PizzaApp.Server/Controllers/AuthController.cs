@@ -3,12 +3,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using PizzaApp.Models;
 using PizzaApp.Server.DAL;
 using PizzaApp.Server.DAL.Models;
 using PizzaApp.Server.Enums;
 using PizzaApp.Server.Helpers;
-using PizzaApp.Server.Models;
 using PizzaApp.Server.Services;
 using PizzaApp.Shared.Models;
 using System.IdentityModel.Tokens.Jwt;
@@ -31,7 +29,7 @@ namespace PizzaApp.Server.Controllers
             _context = context;
         }
 
-        [HttpGet("test"), Authorize]
+        [HttpGet("test")]
         public ValidResponse GetUsername()
         {
             return new ValidResponse()

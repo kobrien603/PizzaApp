@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using PizzaApp.Attributes;
 using System.Text.RegularExpressions;
 
-namespace PizzaApp.Models
+namespace PizzaApp.Shared.Models
 {
     public class CreateUserModel
     {
