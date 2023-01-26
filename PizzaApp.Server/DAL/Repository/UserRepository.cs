@@ -1,7 +1,9 @@
-﻿using PizzaApp.Server.DAL.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PizzaApp.Server.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,42 +15,46 @@ namespace PizzaApp.Server.DAL.Repository
 
         public UserRepository(PizzaContext context) => _DAL = context;
 
-        public bool InsertOrUpdate(User user)
+        public async Task InsertOrUpdate(User user)
         {
-            bool success;
-
             try
             {
                 if (user.ID == 0)
                 {
-                    _DAL.Users.Add(user);
+                    await _DAL.Users.AddAsync(user);
                 }
                 else
                 {
                     _DAL.Users.Update(user);
                 }
 
-                _DAL.SaveChanges();
-
-                success = true;
+                await _DAL.SaveChangesAsync();
             }
             catch(Exception e)
             {
                 // todo - log message
-                success = false;
             }
-
-            return success;
         }
 
-        public bool EmailAlreadyRegistered(string email)
+        public async Task<bool> EmailAlreadyRegistered(string email)
         {
-            return _DAL.Users.Where(p => p.Email == email).Any();
+            return await _DAL.Users.Where(p => p.Email == email).AnyAsync();
         }
 
-        public User GetUserByEmail(string email)
+        public async Task<User?> GetUserByEmail(string email)
         {
-            return _DAL.Users.FirstOrDefault(p => p.Email == email);
+            return await _DAL.Users.AsNoTracking()
+                .Include(p => p.Role)
+                .Where(p => p.Email == email)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<User?> GetUserByID(int id)
+        {
+            return await _DAL.Users.AsNoTracking()
+                .Include(p => p.Role)
+                .Where(p => p.ID == id)
+                .FirstOrDefaultAsync();
         }
     }
 }

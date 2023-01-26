@@ -1,0 +1,14 @@
+﻿@namespace PizzaApp.Components
+
+@if (IsLoading)
+{
+    <Loading />
+}
+else
+{
+    <CascadingValue Value="CookieService">
+        <CascadingValue Value="Snackbar">
+            @ChildContent
+        </CascadingValue>
+    </CascadingValue>
+}

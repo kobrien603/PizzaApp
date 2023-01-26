@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components.WebView.Maui;
+﻿using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.WebView.Maui;
+using PizzaApp.Provider;
 
 namespace PizzaApp.MAUI
 {
@@ -21,9 +23,11 @@ namespace PizzaApp.MAUI
 #endif
 
 			// add DI from PizzaApp
-			builder.Services.TryAddPizzaAppRCL();
+			builder.Services.InjectPizzaApp();
 
-			return builder.Build();
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://10.0.2.2:5000") });
+
+            return builder.Build();
         }
     }
 }

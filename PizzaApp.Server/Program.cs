@@ -1,40 +1,63 @@
+using PizzaApp.Server.Extensions;
+using PizzaApp.Server.Middleware;
+using PizzaApp.Server.Services;
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddResponseCaching();
+
+builder.Services.AddAuthentication();
+builder.Services.ConfigureMySQLDatabase(builder.Configuration);
+builder.Services.ConfigureJWT(builder.Configuration);
+
+builder.Services.AddScoped<CustomAuthMiddleware>();
+builder.Services.AddScoped<AuthUserService>();
+builder.Services.AddHttpContextAccessor();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.ConfigureSwagger();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseSwagger(); // turn off so you don't go directly to api doc
+app.UseSwaggerUI();
+
+app.UseMigrationsEndPoint();
+app.UseWebAssemblyDebugging();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    //app.UseSwagger(); // turn off so you don't go directly to api doc
+    //app.UseSwaggerUI();
 
-    app.UseMigrationsEndPoint();
-    app.UseWebAssemblyDebugging();
+    //app.UseMigrationsEndPoint();
+    //app.UseWebAssemblyDebugging();
 }
 else
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    //app.UseExceptionHandler("/Error");
+    //// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    //app.UseHsts();
 }
+
+// middleware
+app.UseMiddleware<CustomAuthMiddleware>();
 
 app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
-//app.UseIdentityServer();
+app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
-
 
 app.MapRazorPages();
 app.MapControllers();

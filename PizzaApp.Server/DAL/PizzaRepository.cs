@@ -15,9 +15,11 @@ namespace PizzaApp.Server.DAL
         {
             _DAL = context;
             Users = new UserRepository(_DAL);
+            Roles = new RolesRepository(_DAL);
         }
 
         public UserRepository Users { get; private set; }
+        public RolesRepository Roles { get; private set; }
 
         public int Complete()
         {
