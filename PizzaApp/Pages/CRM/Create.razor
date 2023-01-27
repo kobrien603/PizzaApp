@@ -1,8 +1,10 @@
 ﻿@page "/admin/create"
 
-
-<CreateItem TItem="CreateUserModel" Model="model" />
-
+<MudContainer MaxWidth="MaxWidth.Medium">
+    <MudPaper Elevation="3" Class="pa-1 my-3 rounded-md">
+        <CreateItem TItem="CreateUserModel" Model="model" />
+    </MudPaper>
+</MudContainer>
 
 @code {
     private CreateUserModel model = new();
