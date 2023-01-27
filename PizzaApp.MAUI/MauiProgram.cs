@@ -25,7 +25,8 @@ namespace PizzaApp.MAUI
 			// add DI from PizzaApp
 			builder.Services.InjectPizzaApp();
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://10.0.2.2:5000") });
+            string url = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5000" : "http://local.pizza.com";
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(url) });
 
             return builder.Build();
         }
