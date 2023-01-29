@@ -18,9 +18,9 @@ namespace PizzaApp.Components
         [Inject] HttpClient Http { get; set; }
         [Inject] public ISnackbar Snackbar { get; set; }
         [Inject] public CookieService CookieService { get; set; }
+        [Inject] public ThemeService ThemeService { get; set; }
 
-        public MudTheme Theme { get; set; } = new();
-        public bool IsDarkMode { get; set; } = true;
+        
         AuthUser User { get; set; } = new();
         bool IsLoading { get; set; } = true;
 
@@ -50,6 +50,16 @@ namespace PizzaApp.Components
             {
                 User = response.Data;
             }
+        }
+
+        /// <summary>
+        /// toggle dark mode on/off
+        /// </summary>
+        /// <param name="darkMode"></param>
+        /// <returns></returns>
+        public async Task ToggleDarkMode(bool darkMode)
+        {
+            ThemeService.IsDarkMode = darkMode;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using PizzaApp.Components;
+using PizzaApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,7 @@ namespace PizzaApp
     {
         [Inject] private NavigationManager NavigationManager { get; set; }
 
-        [CascadingParameter] MudTheme Theme { get; set; }
-        [CascadingParameter] bool IsDarkMode { get; set; }
+        [Inject] ThemeService ThemeService { get; set; }
 
         bool MenuOpened { get; set; }
 

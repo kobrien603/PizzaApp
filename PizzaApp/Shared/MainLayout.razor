@@ -3,7 +3,7 @@
 
 <PageTitle>Pizza App</PageTitle>
 
-<MudThemeProvider @bind-IsDarkMode="IsDarkMode" Theme="Theme" />
+<MudThemeProvider @bind-IsDarkMode="ThemeService.IsDarkMode" Theme="ThemeService.Theme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -13,14 +13,15 @@
         <MudText Typo="Typo.h5" Class="ml-3">Pizza Place</MudText>
         <MudSpacer />
 
-        <AuthorizeView>
+        @*<AuthorizeView>
             <Authorized>
                 <MudAvatar Color="Color.Secondary">K</MudAvatar>
             </Authorized>
             <NotAuthorized>
                 <MudAvatar Color="Color.Secondary">Login</MudAvatar>
             </NotAuthorized>
-        </AuthorizeView>
+        </AuthorizeView>*@
+        <UserNavMenu />
         
     </MudAppBar>
 
