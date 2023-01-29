@@ -19,8 +19,9 @@ namespace PizzaApp.Components
         [Inject] public ISnackbar Snackbar { get; set; }
         [Inject] public CookieService CookieService { get; set; }
 
+        public MudTheme Theme { get; set; } = new();
+        public bool IsDarkMode { get; set; } = true;
         AuthUser User { get; set; } = new();
-        
         bool IsLoading { get; set; } = true;
 
         protected override async Task OnInitializedAsync()

@@ -1,13 +1,47 @@
 ﻿@inherits LayoutComponentBase
 @namespace PizzaApp
 
-<MudLayout Style="@($"background:{Colors.Grey.Darken4};")">
-    @if(NavigationManager.Uri.ToLower().StartsWith("/admin"))
-    {
-        <AdminLayout Body="@Body" />
-    } 
-    else
-    {
-        <AppLayout Body="@Body" />
-    }
+<PageTitle>Pizza App</PageTitle>
+
+<MudThemeProvider @bind-IsDarkMode="IsDarkMode" Theme="Theme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="8">
+        <MudToggleIconButton @bind-Toggled="MenuOpened" Icon="@Icons.Material.Filled.Menu" ToggledIcon="@Icons.Material.Filled.Close" Color="Color.Inherit" ToggledColor="Color.Inherit" Edge="Edge.Start" />
+        <MudText Typo="Typo.h5" Class="ml-3">Pizza Place</MudText>
+        <MudSpacer />
+
+        <AuthorizeView>
+            <Authorized>
+                <MudAvatar Color="Color.Secondary">K</MudAvatar>
+            </Authorized>
+            <NotAuthorized>
+                <MudAvatar Color="Color.Secondary">Login</MudAvatar>
+            </NotAuthorized>
+        </AuthorizeView>
+        
+    </MudAppBar>
+
+    <MudDrawer @bind-Open="MenuOpened" ClipMode="DrawerClipMode.Always" Elevation="2">
+        <NavMenu />
+    </MudDrawer>
+
+    <MudMainContent>
+        <div class="main_container pb-3">
+            <div class="content">
+                @Body
+            </div>
+        </div>
+        <Footer />
+    </MudMainContent>
 </MudLayout>
+
+
+@*@if(NavigationManager.Uri.ToLower().StartsWith("/admin"))
+{
+} 
+else
+{*@
+@*}*@

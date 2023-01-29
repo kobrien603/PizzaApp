@@ -6,9 +6,13 @@
 }
 else
 {
-    <CascadingValue Value="CookieService">
-        <CascadingValue Value="Snackbar">
-            @ChildContent
+    <CascadingValue Value="CookieService" IsFixed>
+        <CascadingValue Value="Snackbar" IsFixed>
+            <CascadingValue Value="Theme" IsFixed>
+                <CascadingValue Value="IsDarkMode">
+                    @ChildContent
+                </CascadingValue>
+            </CascadingValue>
         </CascadingValue>
     </CascadingValue>
 }
