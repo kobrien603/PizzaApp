@@ -20,7 +20,6 @@ namespace PizzaApp.Components
         [Inject] public CookieService CookieService { get; set; }
         [Inject] public ThemeService ThemeService { get; set; }
 
-        
         AuthUser User { get; set; } = new();
         bool IsLoading { get; set; } = true;
 
