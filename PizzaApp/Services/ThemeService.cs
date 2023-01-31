@@ -10,8 +10,19 @@ namespace PizzaApp.Services
     public class ThemeService
     {
         public MudTheme Theme { get; set; } = new();
-        public bool IsDarkMode { get; set; } = true;
 
-        public event Action<bool> ToggleDarkMode;
+        private bool isDarkMode = true;
+        public bool IsDarkMode
+        {
+            get => isDarkMode;
+            set
+            {
+                isDarkMode = value;
+                NotifyStateChanged();
+            }
+        }
+
+        public event Action? OnChange;
+        private void NotifyStateChanged() => OnChange?.Invoke();
     }
 }

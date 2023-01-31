@@ -6,6 +6,8 @@
 }
 else
 {
+    <MudThemeProvider @bind-IsDarkMode="ThemeService.IsDarkMode" Theme="ThemeService.Theme" />
+
     <CascadingValue Value="CookieService" IsFixed>
         <CascadingValue Value="Snackbar" IsFixed>
             @ChildContent

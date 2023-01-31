@@ -14,8 +14,6 @@ namespace PizzaApp
     {
         [Inject] private NavigationManager NavigationManager { get; set; }
 
-        [Inject] ThemeService ThemeService { get; set; }
-
         bool MenuOpened { get; set; }
 
         void DrawerToggle()

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PizzaApp.Components
 {
-    public partial class SessionContainer
+    public partial class SessionContainer: IDisposable
     {
         [Parameter] public RenderFragment ChildContent { get; set; }
 
@@ -30,6 +30,16 @@ namespace PizzaApp.Components
             
             IsLoading = false;
             StateHasChanged();
+        }
+
+        protected override void OnInitialized()
+        {
+            ThemeService.OnChange += StateHasChanged;
+        }
+
+        public void Dispose()
+        {
+            ThemeService.OnChange -= StateHasChanged;
         }
 
         private async Task ManageSession()

@@ -1,10 +1,11 @@
 ﻿@namespace PizzaApp.Components
+@implements IDisposable
 
 <MudSwitch @bind-Checked="@ThemeService.IsDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" />
 
 <MudAvatar Color="Color.Secondary">
     <MudMenu Label="K" Variant="Variant.Filled" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopRight" Color="Color.Default" Size="Size.Large">
-        <MudMenuItem >
+        <MudMenuItem>
             <MudSwitch @bind-Checked="@ThemeService.IsDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" />
         </MudMenuItem>
         <MudMenuItem Href="/login">Login</MudMenuItem>
@@ -14,4 +15,14 @@
 
 @code {
     [Inject] public ThemeService ThemeService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ThemeService.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        ThemeService.OnChange -= StateHasChanged;
+    }
 }
