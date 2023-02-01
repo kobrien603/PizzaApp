@@ -1,17 +1,17 @@
 ﻿@namespace PizzaApp.Components
 @implements IDisposable
 
-<MudSwitch @bind-Checked="@ThemeService.IsDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" />
-
-<MudAvatar Color="Color.Secondary">
-    <MudMenu Label="K" Variant="Variant.Filled" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopRight" Color="Color.Default" Size="Size.Large">
-        <MudMenuItem>
-            <MudSwitch @bind-Checked="@ThemeService.IsDarkMode" Color="Color.Primary" Class="ma-4" T="bool" Label="Toggle Light/Dark Mode" />
-        </MudMenuItem>
-        <MudMenuItem Href="/login">Login</MudMenuItem>
-        <MudMenuItem>Armory</MudMenuItem>
-    </MudMenu>
-</MudAvatar>
+<MudMenu Variant="Variant.Filled" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopRight" Color="Color.Default" Size="Size.Large">
+    <ActivatorContent>
+        <MudAvatar Color="Color.Secondary">K</MudAvatar>
+    </ActivatorContent>
+    <ChildContent>
+        <MudToggleIconButton @bind-Toggled="@ThemeService.IsDarkMode" Icon="@Icons.Material.Rounded.ShieldMoon" Color="@Color.Dark" ToggledIcon="@Icons.Material.Filled.WbSunny" ToggledColor="@Color.Success" />
+        <MudMenuItem>Theme</MudMenuItem>
+        <MudMenuItem>Usage</MudMenuItem>
+        <MudMenuItem>Sign Out</MudMenuItem>
+    </ChildContent>
+</MudMenu>
 
 @code {
     [Inject] public ThemeService ThemeService { get; set; }
