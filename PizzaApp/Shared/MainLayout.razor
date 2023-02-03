@@ -3,6 +3,7 @@
 
 <PageTitle>Pizza App</PageTitle>
 
+<MudThemeProvider @bind-IsDarkMode="ThemeService.IsDarkMode" Theme="ThemeService.Theme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -11,17 +12,7 @@
         <MudToggleIconButton @bind-Toggled="MenuOpened" Icon="@Icons.Material.Filled.Menu" ToggledIcon="@Icons.Material.Filled.Close" Color="Color.Inherit" ToggledColor="Color.Inherit" Edge="Edge.Start" />
         <MudText Typo="Typo.h5" Class="ml-3">Pizza Place</MudText>
         <MudSpacer />
-
-        @*<AuthorizeView>
-            <Authorized>
-                <MudAvatar Color="Color.Secondary">K</MudAvatar>
-            </Authorized>
-            <NotAuthorized>
-                <MudAvatar Color="Color.Secondary">Login</MudAvatar>
-            </NotAuthorized>
-        </AuthorizeView>*@
         <UserNavMenu />
-        
     </MudAppBar>
 
     <MudDrawer @bind-Open="MenuOpened" ClipMode="DrawerClipMode.Always" Elevation="2">
@@ -37,11 +28,3 @@
         <Footer />
     </MudMainContent>
 </MudLayout>
-
-
-@*@if(NavigationManager.Uri.ToLower().StartsWith("/admin"))
-{
-} 
-else
-{*@
-@*}*@

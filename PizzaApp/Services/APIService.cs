@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PizzaApp.Services
 {
-    internal class APIService
+    public class APIService
     {
         private readonly HttpClient _httpClient;
         private readonly ISnackbar _snackbar;

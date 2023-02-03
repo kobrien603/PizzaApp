@@ -1,28 +1,30 @@
 ﻿@namespace PizzaApp.Components
-@implements IDisposable
 
-<MudMenu Variant="Variant.Filled" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopRight" Color="Color.Default" Size="Size.Large">
-    <ActivatorContent>
-        <MudAvatar Color="Color.Secondary">K</MudAvatar>
-    </ActivatorContent>
-    <ChildContent>
-        <MudToggleIconButton @bind-Toggled="@ThemeService.IsDarkMode" Icon="@Icons.Material.Rounded.ShieldMoon" Color="@Color.Dark" ToggledIcon="@Icons.Material.Filled.WbSunny" ToggledColor="@Color.Success" />
-        <MudMenuItem>Theme</MudMenuItem>
-        <MudMenuItem>Usage</MudMenuItem>
-        <MudMenuItem>Sign Out</MudMenuItem>
-    </ChildContent>
-</MudMenu>
-
-@code {
-    [Inject] public ThemeService ThemeService { get; set; }
-
-    protected override void OnInitialized()
-    {
-        ThemeService.OnChange += StateHasChanged;
-    }
-
-    public void Dispose()
-    {
-        ThemeService.OnChange -= StateHasChanged;
-    }
-}
+<AuthorizeView>
+    <Authorized>
+        <MudMenu Variant="Variant.Filled" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopRight" Color="Color.Default" Size="Size.Large">
+            <ActivatorContent>
+                <DisplayProfilePicture ProfilePicture="@UserService.User.ProfilePicture" />
+            </ActivatorContent>
+            <ChildContent>
+                <MudToggleIconButton @bind-Toggled="@ThemeService.IsDarkMode" Icon="@Icons.Material.Rounded.ShieldMoon" Color="@Color.Dark" ToggledIcon="@Icons.Material.Filled.WbSunny" ToggledColor="@Color.Success" />
+                <MudMenuItem>Theme</MudMenuItem>
+                <MudMenuItem>Usage</MudMenuItem>
+                <MudMenuItem>Sign Out</MudMenuItem>
+            </ChildContent>
+        </MudMenu>
+    </Authorized>
+    <NotAuthorized>
+        <MudMenu Variant="Variant.Filled" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopRight" Color="Color.Default" Size="Size.Large">
+            <ActivatorContent>
+                <MudAvatar Color="Color.Secondary">Login</MudAvatar>
+            </ActivatorContent>
+            <ChildContent>
+                <MudToggleIconButton @bind-Toggled="@ThemeService.IsDarkMode" Icon="@Icons.Material.Rounded.ShieldMoon" Color="@Color.Dark" ToggledIcon="@Icons.Material.Filled.WbSunny" ToggledColor="@Color.Success" />
+                <MudMenuItem>Theme</MudMenuItem>
+                <MudMenuItem>Usage</MudMenuItem>
+                <MudMenuItem>Sign Out</MudMenuItem>
+            </ChildContent>
+        </MudMenu>
+    </NotAuthorized>
+</AuthorizeView>

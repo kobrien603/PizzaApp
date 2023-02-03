@@ -12,11 +12,11 @@ namespace PizzaApp.Components
 {
     public partial class LoginForm
     {
+        [Inject] ISnackbar Snackbar { get; set; }
         [Inject] APIService APIService { get; set; }
         [Inject] CookieService CookieService { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
         [Inject] AuthenticationStateProvider AuthStateProvider { get; set; }
-        [CascadingParameter] ISnackbar Snackbar { get; set; }
 
         bool BtnLogin { get; set; }
         bool IsLoading { get; set; } = true;
@@ -69,7 +69,7 @@ namespace PizzaApp.Components
             var response = await APIService.Get<ValidResponse>("/api/auth/test");
 
             Snackbar.Add(
-                response.ResponseMessage,
+               response.ResponseMessage,
                Severity.Error
             );
 

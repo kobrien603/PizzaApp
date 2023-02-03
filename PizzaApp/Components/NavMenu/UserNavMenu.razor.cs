@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MudBlazor;
-using PizzaApp.Components;
 using PizzaApp.Services;
 using System;
 using System.Collections.Generic;
@@ -8,26 +6,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PizzaApp
+namespace PizzaApp.Components
 {
-    public partial class MainLayout : IDisposable
+    public partial class UserNavMenu : IDisposable
     {
+        [Inject] public UserService UserService { get; set; }
         [Inject] public ThemeService ThemeService { get; set; }
-
-        bool MenuOpened { get; set; }
 
         protected override void OnInitialized()
         {
+            UserService.OnChange += StateHasChanged;
             ThemeService.OnChange += StateHasChanged;
-        }
-
-        void DrawerToggle()
-        {
-            MenuOpened = !MenuOpened;
         }
 
         public void Dispose()
         {
+            UserService.OnChange -= StateHasChanged;
             ThemeService.OnChange -= StateHasChanged;
         }
     }

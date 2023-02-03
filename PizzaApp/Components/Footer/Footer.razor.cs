@@ -1,4 +1,6 @@
-﻿using MudBlazor;
+﻿using Microsoft.AspNetCore.Components;
+using MudBlazor;
+using PizzaApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,6 @@ namespace PizzaApp.Components
 {
     partial class Footer
     {
-        private MudTheme Theme { get; set; } = new();
+        [Inject] public ThemeService ThemeService { get; set; }
     }
 }

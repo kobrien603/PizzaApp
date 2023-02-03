@@ -14,11 +14,11 @@ namespace PizzaApp.Components
 {
     public partial class RegisterForm
     {
-		[Inject] APIService APIService { get; set; }
+        [Inject] ISnackbar Snackbar { get; set; }
+        [Inject] APIService APIService { get; set; }
         [Inject] CookieService CookieService { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
         [Inject] AuthenticationStateProvider AuthStateProvider { get; set; }
-        [CascadingParameter] ISnackbar Snackbar { get; set; }
 
         CreateUserModel NewUser { get; set; } = new();
         bool BtnCreateAccount { get; set; }
@@ -79,8 +79,6 @@ namespace PizzaApp.Components
 
                 NavigationManager.NavigateTo("/");
             }
-
-            await Task.Delay(1000);
 
             BtnCreateAccount = false;
             StateHasChanged();

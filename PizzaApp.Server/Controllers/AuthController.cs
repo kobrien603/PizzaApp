@@ -39,6 +39,17 @@ namespace PizzaApp.Server.Controllers
             };
         }
 
+        [HttpGet("fetch-user")]
+        public async Task<ValidResponse<AuthUser>> GetAuthUser()
+        {
+            return new ValidResponse<AuthUser>()
+            {
+                IsValid = true,
+                Data = await _authUserService.GetUser(),
+                ResponseMessage = "Success"
+            };
+        }
+
         /// <summary>
         /// create new user - store in db
         /// </summary>

@@ -5,7 +5,7 @@
     <MudPaper Elevation="3" Class="pa-1 my-3 rounded-md">
         About Us
 
-        <AuthorizeView Roles="Admin">
+        <AuthorizeView>
             <Authorized>
                 <span>You're authorized as @context.User.Identity.Name</span>
             </Authorized>

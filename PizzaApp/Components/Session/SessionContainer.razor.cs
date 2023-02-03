@@ -11,64 +11,20 @@ using System.Threading.Tasks;
 
 namespace PizzaApp.Components
 {
-    public partial class SessionContainer: IDisposable
+    public partial class SessionContainer
     {
         [Parameter] public RenderFragment ChildContent { get; set; }
 
-        [Inject] HttpClient Http { get; set; }
-        [Inject] public ISnackbar Snackbar { get; set; }
-        [Inject] public CookieService CookieService { get; set; }
-        [Inject] public ThemeService ThemeService { get; set; }
+        [Inject] public UserService UserService { get; set; }
 
-        AuthUser User { get; set; } = new();
         bool IsLoading { get; set; } = true;
 
         protected override async Task OnInitializedAsync()
         {
-            await ManageSession();
-            
+            await UserService.FetchUser();
+
             IsLoading = false;
             StateHasChanged();
-        }
-
-        protected override void OnInitialized()
-        {
-            ThemeService.OnChange += StateHasChanged;
-        }
-
-        public void Dispose()
-        {
-            ThemeService.OnChange -= StateHasChanged;
-        }
-
-        private async Task ManageSession()
-        {
-            //string token = await CookieService.GetCookie("pizza_app_session");
-            //if (!string.IsNullOrEmpty(token))
-            //{
-            //    // fetch and fill
-            //    await FetchUser();
-            //}
-        }
-
-        private async Task FetchUser()
-        {
-            var request = await Http.GetAsync("api/users/get-user");
-            var response = await request.Content.ReadFromJsonAsync<ValidResponse<AuthUser>>();
-            if (response.IsValid)
-            {
-                User = response.Data;
-            }
-        }
-
-        /// <summary>
-        /// toggle dark mode on/off
-        /// </summary>
-        /// <param name="darkMode"></param>
-        /// <returns></returns>
-        public async Task ToggleDarkMode(bool darkMode)
-        {
-            ThemeService.IsDarkMode = darkMode;
         }
     }
 }
