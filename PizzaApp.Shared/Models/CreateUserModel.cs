@@ -52,7 +52,7 @@ namespace PizzaApp.Shared.Models
 
         public string ProfilePicture { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Phone number is required")]
+        [Required(ErrorMessage = "Date of birth is required")]
         [BirthdayValidation]
         public DateTime? DateOfBirth { get; set; }
 

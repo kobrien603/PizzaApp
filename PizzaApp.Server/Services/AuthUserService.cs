@@ -40,7 +40,7 @@ namespace PizzaApp.Server.Services
                         user = new()
                         {
                             CreatedDate = dbUser.CreatedDate,
-                            DateOfBirth = dbUser.DateOfBirth,
+                            DateOfBirth = dbUser.DateOfBirth.HasValue ? dbUser.DateOfBirth.Value.ToDateTime(new TimeOnly()) : null,
                             Email = dbUser.Email,
                             FirstName = dbUser.FirstName,
                             ID = dbUser.ID,

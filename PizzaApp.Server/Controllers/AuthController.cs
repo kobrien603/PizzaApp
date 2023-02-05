@@ -98,7 +98,7 @@ namespace PizzaApp.Server.Controllers
                     response.Data = new()
                     {
                         CreatedDate = dbUser.CreatedDate,
-                        DateOfBirth = dbUser.DateOfBirth,
+                        DateOfBirth = dbUser.DateOfBirth.HasValue ? dbUser.DateOfBirth.Value.ToDateTime(new TimeOnly()) : null,
                         Email = dbUser.Email,
                         FirstName = dbUser.FirstName,
                         ID = dbUser.ID,
@@ -143,7 +143,7 @@ namespace PizzaApp.Server.Controllers
                     response.Data = new()
                     {
                         CreatedDate = dbUser.CreatedDate,
-                        DateOfBirth = dbUser.DateOfBirth,
+                        DateOfBirth = dbUser.DateOfBirth.HasValue ? dbUser.DateOfBirth.Value.ToDateTime(new TimeOnly()) : null,
                         Email = dbUser.Email,
                         FirstName = dbUser.FirstName,
                         ID = dbUser.ID,

@@ -21,6 +21,7 @@ namespace PizzaApp.Components
         [Parameter]
         public EventCallback<string> ReturnProfilePicture { get; set; }
 
+        [Parameter]
         public string ProfilePicture { get; set; } = string.Empty;
 
         public bool BtnLoadingPicture { get; set; } = false;
