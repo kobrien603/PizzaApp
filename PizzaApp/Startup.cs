@@ -39,7 +39,7 @@ namespace PizzaApp
             services.AddTransient<APIService>();
             services.AddTransient<CookieService>();
 
-            services.AddScoped<UserService>();
+            services.AddSingleton<UserService>();
             services.AddSingleton<ThemeService>();
 
             // custom auth state provider

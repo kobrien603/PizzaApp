@@ -19,7 +19,7 @@ namespace PizzaApp.Services
             _snackbar = snackbar;
         }
 
-        public async Task<T> Get<T>(string url)
+        public async Task<T?> Get<T>(string url)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace PizzaApp.Services
             return default;
         }
 
-        public async Task<HttpResponseMessage> Post<T>(string url, T data)
+        public async Task<HttpResponseMessage?> Post<T>(string url, T data)
         {
             try
             {

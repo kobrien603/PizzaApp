@@ -17,14 +17,32 @@ namespace PizzaApp.Components
 
         [Inject] public UserService UserService { get; set; }
 
+        [Inject] public APIService APIService { get; set; }
+
+        [Inject] public CookieService CookieService { get; set; }
+
         bool IsLoading { get; set; } = true;
 
         protected override async Task OnInitializedAsync()
         {
-            await UserService.FetchUser();
+            await FetchUser();
 
             IsLoading = false;
             StateHasChanged();
+        }
+
+        public async Task FetchUser()
+        {
+            string token = await CookieService.GetCookie("pizza_app_session");
+            if (!string.IsNullOrEmpty(token))
+            {
+                // fetch and fill user
+                var response = await APIService.Get<ValidResponse<AuthUser>>("/api/auth/fetch-user");
+                if (response.IsValid)
+                {
+                    UserService.User = response.Data;
+                }
+            }
         }
     }
 }

@@ -12,13 +12,9 @@ namespace PizzaApp.Services
 {
     public class UserService
     {
-        private readonly APIService _apiService;
-        private readonly CookieService _cookieService;
-
-        public UserService(APIService apiService, CookieService cookieService)
+        public UserService()
         {
-            _apiService = apiService;
-            _cookieService = cookieService;
+
         }
 
         private AuthUser user = new();
@@ -34,19 +30,5 @@ namespace PizzaApp.Services
 
         public event Action? OnChange;
         private void NotifyStateChanged() => OnChange?.Invoke();
-
-        public async Task FetchUser()
-        {
-            string token = await _cookieService.GetCookie("pizza_app_session");
-            if (!string.IsNullOrEmpty(token))
-            {
-                // fetch and fill user
-                var response = await _apiService.Get<ValidResponse<AuthUser>>("/api/auth/fetch-user");
-                if (response.IsValid)
-                {
-                    User = response.Data;
-                }
-            }
-        }
     }
 }
