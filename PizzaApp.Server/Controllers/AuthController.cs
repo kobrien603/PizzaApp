@@ -56,9 +56,9 @@ namespace PizzaApp.Server.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("register")]
-        public async Task<ValidResponse> Register([FromBody] CreateUserModel model)
+        public async Task<ValidResponse<AuthUser>> Register([FromBody] CreateUserModel model)
         {
-            ValidResponse response = new();
+            ValidResponse<AuthUser> response = new();
 
             try
             {
@@ -95,6 +95,18 @@ namespace PizzaApp.Server.Controllers
 
                     // valid response
                     response.IsValid = true;
+                    response.Data = new()
+                    {
+                        CreatedDate = dbUser.CreatedDate,
+                        DateOfBirth = dbUser.DateOfBirth,
+                        Email = dbUser.Email,
+                        FirstName = dbUser.FirstName,
+                        ID = dbUser.ID,
+                        LastName = dbUser.LastName,
+                        ModifiedDate = dbUser.ModifiedDate,
+                        PhoneNumber = dbUser.PhoneNumber,
+                        ProfilePicture = dbUser.ProfilePicture,
+                    };
                     response.ResponseMessage = CreateToken(dbUser);
                 }
             }
@@ -114,9 +126,9 @@ namespace PizzaApp.Server.Controllers
 		/// <param name="model"></param>
 		/// <returns></returns>
 		[HttpPost("login")]
-        public async Task<ValidResponse> Login([FromBody] LoginModel model)
+        public async Task<ValidResponse<AuthUser>> Login([FromBody] LoginModel model)
         {
-            ValidResponse response = new();
+            ValidResponse<AuthUser> response = new();
 
             try
             {
@@ -128,6 +140,18 @@ namespace PizzaApp.Server.Controllers
                 if (dbUser != null && PasswordHelper.ValidatePassword(model.Password, dbUser.Password))
                 {
                     response.IsValid = true;
+                    response.Data = new()
+                    {
+                        CreatedDate = dbUser.CreatedDate,
+                        DateOfBirth = dbUser.DateOfBirth,
+                        Email = dbUser.Email,
+                        FirstName = dbUser.FirstName,
+                        ID = dbUser.ID,
+                        LastName = dbUser.LastName,
+                        ModifiedDate = dbUser.ModifiedDate,
+                        PhoneNumber = dbUser.PhoneNumber,
+                        ProfilePicture = dbUser.ProfilePicture,
+                    };
                     response.ResponseMessage = CreateToken(dbUser, model.RememberMe);
                 }
                 else

@@ -10,10 +10,11 @@ using System.Net.Http.Json;
 
 namespace PizzaApp.Components
 {
-    public partial class LoginForm
+    public partial class LoginForm : IDisposable
     {
         [Inject] ISnackbar Snackbar { get; set; }
         [Inject] APIService APIService { get; set; }
+        [Inject] UserService UserService { get; set; }
         [Inject] CookieService CookieService { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
         [Inject] AuthenticationStateProvider AuthStateProvider { get; set; }
@@ -24,6 +25,16 @@ namespace PizzaApp.Components
         bool ShowPassword { get; set; } = true;
         InputType PasswordInput { get; set; } = InputType.Password;
         string PasswordInputIcon { get; set; } = Icons.Material.Filled.VisibilityOff;
+
+        protected override void OnInitialized()
+        {
+            UserService.OnChange += StateHasChanged;
+        }
+
+        public void Dispose()
+        {
+            UserService.OnChange -= StateHasChanged;
+        }
 
         protected override void OnAfterRender(bool firstRender)
         {
@@ -41,22 +52,30 @@ namespace PizzaApp.Components
             BtnLogin = true;
 
             var request = await APIService.Post("api/auth/login", Model);
-            var response = await request.Content.ReadFromJsonAsync<ValidResponse>();
+            var response = await request.Content.ReadFromJsonAsync<ValidResponse<AuthUser>>();
 
-            Snackbar.Add(
-                response.ResponseMessage,
-                response.IsValid ? Severity.Success : Severity.Error
-            );
+            //Snackbar.Add(
+            //    response.ResponseMessage,
+            //    response.IsValid ? Severity.Success : Severity.Error
+            //);
 
             if (response.IsValid)
             {
+                UserService.User = response.Data;
                 await CookieService.SetCookie("pizza_app_session", response.ResponseMessage, 7);
                 await AuthStateProvider.GetAuthenticationStateAsync();
 
+                Snackbar.Add("Login successful!", Severity.Success);
+
                 NavigationManager.NavigateTo("/");
             }
-
-            await Task.Delay(1000);
+            else
+            {
+                Snackbar.Add(
+                    response.ResponseMessage,
+                    Severity.Error
+                );
+            }
 
             BtnLogin = false;
             StateHasChanged();

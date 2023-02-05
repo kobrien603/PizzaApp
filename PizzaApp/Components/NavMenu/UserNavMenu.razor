@@ -10,7 +10,7 @@
                 <MudToggleIconButton @bind-Toggled="@ThemeService.IsDarkMode" Icon="@Icons.Material.Rounded.ShieldMoon" Color="@Color.Dark" ToggledIcon="@Icons.Material.Filled.WbSunny" ToggledColor="@Color.Success" />
                 <MudMenuItem>Theme</MudMenuItem>
                 <MudMenuItem>Usage</MudMenuItem>
-                <MudMenuItem>Sign Out</MudMenuItem>
+                <MudMenuItem OnClick="LogUserOut">Sign Out</MudMenuItem>
             </ChildContent>
         </MudMenu>
     </Authorized>

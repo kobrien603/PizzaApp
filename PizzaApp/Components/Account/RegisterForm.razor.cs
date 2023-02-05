@@ -12,10 +12,11 @@ using System.Threading.Tasks;
 
 namespace PizzaApp.Components
 {
-    public partial class RegisterForm
+    public partial class RegisterForm : IDisposable
     {
         [Inject] ISnackbar Snackbar { get; set; }
         [Inject] APIService APIService { get; set; }
+        [Inject] UserService UserService { get; set; }
         [Inject] CookieService CookieService { get; set; }
         [Inject] NavigationManager NavigationManager { get; set; }
         [Inject] AuthenticationStateProvider AuthStateProvider { get; set; }
@@ -26,6 +27,16 @@ namespace PizzaApp.Components
         bool ShowPassword { get; set; } = true;
         InputType PasswordInput { get; set; } = InputType.Password;
         string PasswordInputIcon { get; set; } = Icons.Material.Filled.VisibilityOff;
+
+        protected override void OnInitialized()
+        {
+            UserService.OnChange += StateHasChanged;
+        }
+
+        public void Dispose()
+        {
+            UserService.OnChange -= StateHasChanged;
+        }
 
         protected override void OnAfterRender(bool firstRender)
         {
@@ -65,19 +76,29 @@ namespace PizzaApp.Components
             BtnCreateAccount = true;
 
 			var request = await APIService.Post("api/auth/register", NewUser);
-            var response = await request.Content.ReadFromJsonAsync<ValidResponse>();
+            var response = await request.Content.ReadFromJsonAsync<ValidResponse<AuthUser>>();
             
-            Snackbar.Add(
-                response.ResponseMessage, 
-                response.IsValid ? Severity.Success : Severity.Error
-            );
+            //Snackbar.Add(
+            //    response.ResponseMessage, 
+            //    response.IsValid ? Severity.Success : Severity.Error
+            //);
 
             if (response.IsValid)
             {
+                UserService.User = response.Data;
                 await CookieService.SetCookie("pizza_app_session", response.ResponseMessage, 7);
                 await AuthStateProvider.GetAuthenticationStateAsync();
 
+                Snackbar.Add("Account created successfully!", Severity.Success);
+
                 NavigationManager.NavigateTo("/");
+            }
+            else
+            {
+                Snackbar.Add(
+                    response.ResponseMessage,
+                    Severity.Error
+                );
             }
 
             BtnCreateAccount = false;
