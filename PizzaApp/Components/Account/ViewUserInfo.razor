@@ -11,19 +11,31 @@
     {
         <MudItem xs="12">
             <MudGrid>
-                <MudItem xs="12" sm="12" md="6" Class="d-flex align-self-center justify-md-start justify-center">
+                <MudItem xs="12" Class="d-flex align-self-center justify-center">
                     <h1>Account Info</h1>
                 </MudItem>
-                <MudItem xs="12" sm="12" md="6">
+            </MudGrid>
+
+            <MudGrid>
+                <MudItem xs="12">
                     <UploadProfilePicture Label="Profile Picture" ProfilePicture="@User.ProfilePicture" ReturnProfilePicture="SetProfilePicture" />
                 </MudItem>
             </MudGrid>
 
             <MudGrid>
-                <MudItem xs="12" sm="12" md="6">
+                <MudItem xs="12">
                     <EditFieldComponent TItem="string" Name="First Name" Value="User.FirstName" />
                 </MudItem>
-                <MudItem xs="12" sm="12" md="6">
+            </MudGrid>
+
+            <MudGrid>
+                <MudItem xs="12">
+                    <EditFieldComponent TItem="string" Name="Last Name" Value="User.LastName" />
+                </MudItem>
+            </MudGrid>
+
+            <MudGrid>
+                <MudItem xs="12">
                     <EditFieldComponent TItem="string" Name="Last Name" Value="User.LastName" />
                 </MudItem>
             </MudGrid>
