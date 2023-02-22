@@ -1,6 +1,32 @@
 ﻿@namespace PizzaApp.Components
 @typeparam TItem
 
-<MudTextField @bind-Value="Value" Label="@Name" Variant="Variant.Text" />
+<MudStack Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Row>
+    @if (EditMode)
+    {
+        if (Value?.GetType() == typeof(string))
+        {
+            <MudTextField @bind-Value="Value" Label="@Name" Variant="Variant.Text" />
+        }
+        else if (Value?.GetType() == typeof(int))
+        {
 
-
+        }
+    }
+    else
+    {
+        <p>@Name</p>
+        <p>@Value</p>
+        <MudButton Disabled="@BtnEdit" ButtonType="ButtonType.Button" OnClick="((e) => EditRow())" Variant="Variant.Filled" Color="Color.Primary" Class="my-3 flex-md-grow-0 flex-grow-1">
+            @if (BtnEdit)
+            {
+                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                <MudText Class="ms-2">Processing</MudText>
+            }
+            else
+            {
+                <MudText>Edit</MudText>
+            }
+        </MudButton>
+    }
+</MudStack>
