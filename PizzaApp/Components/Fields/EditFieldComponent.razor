@@ -15,9 +15,9 @@
     }
     else
     {
-        <p>@Name</p>
+        <b>@(Name):</b>
         <p>@Value</p>
-        <MudButton Disabled="@BtnEdit" ButtonType="ButtonType.Button" OnClick="((e) => EditRow())" Variant="Variant.Filled" Color="Color.Primary" Class="my-3 flex-md-grow-0 flex-grow-1">
+        <MudButton Disabled="@BtnEdit" ButtonType="ButtonType.Button" OnClick="((e) => EditRow())" Variant="Variant.Filled" Color="Color.Primary" Class="px-10 flex-md-grow-0 flex-grow-1">
             @if (BtnEdit)
             {
                 <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />

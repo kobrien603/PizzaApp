@@ -1,5 +1,4 @@
 ﻿@page "/about"
-@attribute [Authorize]
 
 <MudContainer MaxWidth="MaxWidth.Medium">
     <MudPaper Elevation="3" Class="pa-1 my-3 rounded-md">
@@ -15,7 +14,3 @@
         </AuthorizeView>
     </MudPaper>
 </MudContainer>
-
-@code {
-    private LoginModel model = new();
-}

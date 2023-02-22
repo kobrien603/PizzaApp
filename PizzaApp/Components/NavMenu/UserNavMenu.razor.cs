@@ -30,13 +30,23 @@ namespace PizzaApp.Components
         {
             UserService.OnChange -= StateHasChanged;
             ThemeService.OnChange -= StateHasChanged;
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// push to login page
+        /// </summary>
+        /// <returns></returns>
+        private async Task RedirectToLogin()
+        {
+            NavigationManager.NavigateTo("/login");
         }
 
         /// <summary>
         /// log user out
         /// </summary>
         /// <returns></returns>
-        public async Task LogUserOut()
+        private async Task LogUserOut()
         {
             if (!string.IsNullOrEmpty(await CookieService.GetCookie("pizza_app_session")))
             {

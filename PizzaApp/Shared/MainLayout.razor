@@ -3,7 +3,7 @@
 
 <PageTitle>Pizza App</PageTitle>
 
-<MudThemeProvider @bind-IsDarkMode="ThemeService.IsDarkMode" Theme="ThemeService.Theme" />
+<MudThemeProvider @ref="MudThemeProvider" @bind-IsDarkMode="ThemeService.IsDarkMode" Theme="ThemeService.Theme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 

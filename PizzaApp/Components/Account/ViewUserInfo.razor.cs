@@ -16,21 +16,11 @@ namespace PizzaApp.Components
         [Inject] public UserService UserService { get; set; }
 
         bool IsLoading { get; set; } = true;
-        CreateUserModel User { get; set; } = new();
+        AuthUser User { get; set; } = new();
 
         protected override void OnInitialized()
         {
-            User = new CreateUserModel()
-            {
-                ConfirmPassword = "",
-                DateOfBirth = UserService.User.DateOfBirth,
-                Email = UserService.User.Email,
-                FirstName = UserService.User.FirstName,
-                LastName = UserService.User.LastName,
-                Password = "",
-                PhoneNumber = UserService.User.PhoneNumber,
-                ProfilePicture = UserService.User.ProfilePicture,
-            };
+            User = UserService.User;
 
             UserService.OnChange += StateHasChanged;
         }
@@ -38,6 +28,7 @@ namespace PizzaApp.Components
         public void Dispose()
         {
             UserService.OnChange -= StateHasChanged;
+            GC.SuppressFinalize(this);
         }
 
         protected override void OnAfterRender(bool firstRender)

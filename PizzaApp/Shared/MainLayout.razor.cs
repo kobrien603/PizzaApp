@@ -14,21 +14,26 @@ namespace PizzaApp
     {
         [Inject] public ThemeService ThemeService { get; set; }
 
-        bool MenuOpened { get; set; }
+        private bool MenuOpened { get; set; }
+        private MudThemeProvider MudThemeProvider { get; set; }
 
         protected override void OnInitialized()
         {
             ThemeService.OnChange += StateHasChanged;
         }
 
-        void DrawerToggle()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            MenuOpened = !MenuOpened;
+            if (firstRender)
+            {
+                ThemeService.IsDarkMode = await MudThemeProvider.GetSystemPreference();
+            }
         }
 
         public void Dispose()
         {
             ThemeService.OnChange -= StateHasChanged;
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -2,28 +2,30 @@
 
 <AuthorizeView>
     <Authorized>
-        <MudMenu Variant="Variant.Filled" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopRight" Color="Color.Default" Size="Size.Large">
+        <MudMenu Variant="Variant.Filled" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopRight" Color="Color.Default">
             <ActivatorContent>
                 <DisplayProfilePicture ProfilePicture="@UserService.User.ProfilePicture" />
             </ActivatorContent>
             <ChildContent>
-                <MudToggleIconButton @bind-Toggled="@ThemeService.IsDarkMode" Icon="@Icons.Material.Rounded.ShieldMoon" Color="@Color.Dark" ToggledIcon="@Icons.Material.Filled.WbSunny" ToggledColor="@Color.Success" />
-                <MudMenuItem>Theme</MudMenuItem>
-                <MudMenuItem>Usage</MudMenuItem>
+                <div class="d-flex justify-center">
+                    <MudToggleIconButton @bind-Toggled="@ThemeService.IsDarkMode" Icon="@Icons.Material.Rounded.ShieldMoon" Color="@Color.Dark" ToggledIcon="@Icons.Material.Filled.WbSunny" ToggledColor="@Color.Success" />
+                </div>
                 <MudMenuItem OnClick="LogUserOut">Sign Out</MudMenuItem>
             </ChildContent>
         </MudMenu>
     </Authorized>
     <NotAuthorized>
-        <MudMenu Variant="Variant.Filled" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopRight" Color="Color.Default" Size="Size.Large">
+        <MudMenu Variant="Variant.Filled" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopRight" Color="Color.Default" Size="Size.Large">
             <ActivatorContent>
-                <MudAvatar Color="Color.Secondary">Login</MudAvatar>
+                <MudAvatar Color="Color.Secondary">
+                    <MudIcon Icon="@MudBlazor.Icons.Material.Filled.PersonOutline" />
+                </MudAvatar>
             </ActivatorContent>
             <ChildContent>
-                <MudToggleIconButton @bind-Toggled="@ThemeService.IsDarkMode" Icon="@Icons.Material.Rounded.ShieldMoon" Color="@Color.Dark" ToggledIcon="@Icons.Material.Filled.WbSunny" ToggledColor="@Color.Success" />
-                <MudMenuItem>Theme</MudMenuItem>
-                <MudMenuItem>Usage</MudMenuItem>
-                <MudMenuItem>Sign Out</MudMenuItem>
+                <div class="d-flex justify-center">
+                    <MudToggleIconButton @bind-Toggled="@ThemeService.IsDarkMode" Icon="@Icons.Material.Rounded.ShieldMoon" Color="@Color.Dark" ToggledIcon="@Icons.Material.Filled.WbSunny" ToggledColor="@Color.Success" />
+                </div>
+                <MudMenuItem OnClick="RedirectToLogin">Sign in</MudMenuItem>
             </ChildContent>
         </MudMenu>
     </NotAuthorized>
