@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,8 @@ namespace PizzaApp.Components
 
         [Parameter] public string Name { get; set; }
         [Parameter] public TItem Value { get; set; }
-        [Parameter] public EventCallback<TItem> UpdateValue { get; set; }
+        [Parameter] public bool Disabled { get; set; }
+        [Parameter] public EventCallback<TItem> ValueChanged { get; set; }
 
         private bool EditMode = false;
         private bool BtnEdit = false;
@@ -28,6 +30,32 @@ namespace PizzaApp.Components
 
             EditMode = true;
             BtnEdit = false;
+        }
+
+        private void CloseEdit()
+        {
+            BtnEdit = false;
+            EditMode = false;
+        }
+
+        private Task ConfirmChangesAndClose()
+        {
+            BtnEdit = false;
+            EditMode = false;
+
+            return ValueChanged.InvokeAsync(Value);
+        }
+
+        private void OnEnterConfirmChangesAndClose(KeyboardEventArgs e)
+        {
+            if (e.Code == "Enter" || e.Code == "NumpadEnter")
+            {
+                ConfirmChangesAndClose();
+            }
+            else if (e.Code == "Escape")
+            {
+                CloseEdit();
+            }
         }
     }
 }

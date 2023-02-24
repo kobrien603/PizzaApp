@@ -1,32 +1,65 @@
 ﻿@namespace PizzaApp.Components
 @typeparam TItem
 
-<MudStack Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Row>
+<MudGrid>
     @if (EditMode)
     {
-        if (Value?.GetType() == typeof(string))
-        {
-            <MudTextField @bind-Value="Value" Label="@Name" Variant="Variant.Text" />
-        }
-        else if (Value?.GetType() == typeof(int))
-        {
-
-        }
+        <MudItem xs="12">
+            @if (Value?.GetType() == typeof(string))
+            {
+                <MudTextField 
+                    @bind-Value="Value" 
+                    Label="@Name" 
+                    Variant="Variant.Text"
+                    Adornment="Adornment.End"
+                    AdornmentIcon="@Icons.Material.Filled.Check"
+                    OnAdornmentClick="ConfirmChangesAndClose"
+                    AdornmentAriaLabel="Confirm Changes"
+                    
+                    AutoFocus
+                    OnBlur="ConfirmChangesAndClose"
+                    @onkeypress="OnEnterConfirmChangesAndClose"
+                />
+            }
+            else if (Value?.GetType() == typeof(DateTime))
+            {
+               @* DateTime? value = DateTime.Parse(Value.ToString());
+                <MudDatePicker 
+                    Date="value"
+                    DateChanged="ConfirmChangesAndClose"
+                    Label="Date of Birth" 
+                    OpenTo="OpenTo.Year" 
+                    Rounded="true" 
+                    Elevation="12"
+                    AdornmentIcon="@Icons.Material.Filled.Check"
+                    AdornmentAriaLabel="Confirm Changes" />*@
+            }
+        </MudItem>
     }
     else
     {
-        <b>@(Name):</b>
-        <p>@Value</p>
-        <MudButton Disabled="@BtnEdit" ButtonType="ButtonType.Button" OnClick="((e) => EditRow())" Variant="Variant.Filled" Color="Color.Primary" Class="px-10 flex-md-grow-0 flex-grow-1">
-            @if (BtnEdit)
-            {
-                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
-                <MudText Class="ms-2">Processing</MudText>
-            }
-            else
-            {
-                <MudText>Edit</MudText>
-            }
-        </MudButton>
+        <MudItem xs="12" sm="12" md="4" Class="d-flex justify-md-start justify-center">
+            <b>@(Name):</b>
+        </MudItem>
+        <MudItem xs="12" sm="12" md="4" Class="d-flex justify-center">
+            <p>@Value</p>
+        </MudItem>
+        <MudItem xs="12" sm="12" md="4" Class="d-flex justify-md-end justify-center">
+            <MudButton Disabled="@(BtnEdit || Disabled)" ButtonType="ButtonType.Button" OnClick="((e) => EditRow())" Variant="Variant.Filled" Color="Color.Secondary" Class="px-3 py-1 flex-md-grow-0 flex-grow-1">
+                @if (BtnEdit)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                    <MudText Class="ms-2">Processing</MudText>
+                }
+                else if (Disabled)
+                {
+                    <MudText>Contact Us</MudText>
+                }
+                else
+                {
+                    <MudText>Edit</MudText>
+                }
+            </MudButton>
+        </MudItem>
     }
-</MudStack>
+</MudGrid>

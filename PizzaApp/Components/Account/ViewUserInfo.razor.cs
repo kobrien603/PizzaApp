@@ -15,8 +15,9 @@ namespace PizzaApp.Components
         [Inject] public ISnackbar Snackbar { get; set; }
         [Inject] public UserService UserService { get; set; }
 
-        bool IsLoading { get; set; } = true;
-        AuthUser User { get; set; } = new();
+        private bool IsLoading { get; set; } = true;
+        private AuthUser User { get; set; } = new();
+        private bool BtnSave { get; set; }
 
         protected override void OnInitialized()
         {
@@ -46,6 +47,15 @@ namespace PizzaApp.Components
         {
             UserService.User.ProfilePicture = profilePic;
             StateHasChanged();
+        }
+
+        private async Task Save()
+        {
+            BtnSave = true;
+
+            await Task.Delay(10);
+
+            BtnSave = false;
         }
     }
 }
