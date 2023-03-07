@@ -10,7 +10,7 @@ namespace PizzaApp.Components
 {
     public partial class UserNavMenu : IDisposable
     {
-        [Inject] public UserService UserService { get; set; }
+        [Inject] public AuthUserService UserService { get; set; }
         [Inject] public ThemeService ThemeService { get; set; }
 
         protected override void OnInitialized()

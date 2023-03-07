@@ -11,17 +11,17 @@ using System.Threading.Tasks;
 
 namespace PizzaApp.Components
 {
-    public partial class SessionContainer
+    public partial class SessionContainer : IDisposable
     {
         [Parameter] public RenderFragment ChildContent { get; set; }
 
-        [Inject] public UserService UserService { get; set; }
+        [Inject] public AuthUserService UserService { get; set; }
 
         [Inject] public APIService APIService { get; set; }
 
         [Inject] public CookieService CookieService { get; set; }
 
-        bool IsLoading { get; set; } = true;
+        private bool IsLoading { get; set; } = true;
 
         protected override async Task OnInitializedAsync()
         {
@@ -38,11 +38,16 @@ namespace PizzaApp.Components
             {
                 // fetch and fill user
                 var response = await APIService.Get<ValidResponse<AuthUser>>("/api/auth/fetch-user");
-                if (response.IsValid)
+                if (response?.IsValid == true)
                 {
                     UserService.User = response.Data;
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
         }
     }
 }

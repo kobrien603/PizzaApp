@@ -1,18 +1,16 @@
-﻿using MudBlazor;
-using PizzaApp.Shared.Models;
+﻿using PizzaApp.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.WebRequestMethods;
 
 namespace PizzaApp.Services
 {
-    public class UserService
+    public class AuthUserService
     {
-        public UserService()
+        public AuthUserService()
         {
 
         }
